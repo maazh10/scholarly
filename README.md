@@ -6,7 +6,7 @@
 
 # Your focus (frontend focused or backend focused)
 
-Frontend focused.
+Frontend focused since we would want to focus more on the user experience and how the content is presented to accomplish a more engaging expeirence for new learners.
 
 # Team members with student numbers
 
@@ -24,14 +24,15 @@ Scholarly is a tutoring application designed for school and university students.
 - SendGrid for email confirmations. (1)
 - ThreeJS for landing page background. (2)
 - Stripe for payment integration. (2)
-- PushAPI for push notifications. (3)
+- Twiio for SMS communication for 2FA. (1)
+- PeerJS for possible video chat integration. (1)
 - Univos data visulization for progress tracking with content (1)
 
 # (optional) What complexity points will be attempted as bonus for the challenge factor
 
 - mozilla/pdf.js for natively viewing PDFs on the webpage. (2)
 - OpenAI possibly for search queries. (1)
-- Twiio for SMS communication for 2FA. (1)
+- PushAPI for push notifications. (3)
 
 # What you aim to complete for the alpha version, beta version, and final version
 
