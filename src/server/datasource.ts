@@ -7,10 +7,9 @@ const PG_DATABASE = process.env.PG_DATABASE || "postgres";
 const PG_USER = process.env.PG_USER || "postgres";
 const PG_PASSWORD = process.env.PG_PASSWORD || "";
 
-
 // create a new sequelize instance to connect to postgres database
 export const sequelize = new Sequelize(PG_DATABASE, PG_USER, PG_PASSWORD, {
-    host: PG_HOST,
-    port: PG_PORT,
-    dialect: "postgres",
+  host: PG_HOST,
+  port: PG_PORT,
+  dialect: "postgres",
 });
