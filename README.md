@@ -16,7 +16,7 @@ Frontend focused since we would want to focus more on the user experience and ho
 
 # Description of the web application
 
-Scholarly is a tutoring application designed for school and university students. The application allows students to find course content and learn material, while also providing instructors with the ability to upload content. Additionally, the application provides students with a workspace for exercises and practice. Students can also schedule live chat (maybe video?) with instructors to get help with particular concepts with a paid subscription.
+Scholarly is a live tutoring application designed for school and university students. Students are able to schedule live video chats sessions with instructors to get help with particular concepts and access several unique features with a paid subscription.
 
 # What complexity points will this project contain
 
@@ -26,7 +26,7 @@ Scholarly is a tutoring application designed for school and university students.
 - Stripe for payment integration. (2)
 - Twiio for SMS communication for 2FA. (1)
 - PeerJS for possible video chat integration. (1)
-- Univos data visulization for progress tracking with content (1)
+- Univos data visulization for some sort of analytics (?) (1)
 
 # (optional) What complexity points will be attempted as bonus for the challenge factor
 
@@ -39,20 +39,17 @@ Scholarly is a tutoring application designed for school and university students.
 ## Alpha Version
 
 - User authentication and authorization.
-- Content management system for instructors.
-- Search and filtering of course content.
-- Workspace for students to view and work through content.
+- Explore PeerJS for video conferencing and implement a test version for it possibly.
 
 ## Beta Version
 
 - Polishing the UI, fixing bugs from alpha version.
-- Integration with third-party APIs for content and resources.
-- Real-time chat feature for communication between students and instructors.
-- Integration with payment processing for premium content.
+- Complete real-time video chat between students and instructors.
+- Add extra features such as a chatbot, analytics, profile, etc.
 
 ## Final Version
 
 - Fixing bugs from previous versions.
 - Securing our API, focus on vulnerabilities. Add 2FA for sign up pssibly.
-- Switch from real-time chat implementation to a video chat using a third party API.
+- Integration with payment processing for premium content.
 - Deploy the application.
