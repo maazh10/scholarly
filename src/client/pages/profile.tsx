@@ -3,6 +3,7 @@ import { Row, Col } from "reactstrap";
 import { useUser, withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 
 import Loading from "../components/Loading";
+import Error from "../components/Error";
 
 function Profile() {
   const { user, isLoading } = useUser();
@@ -40,5 +41,5 @@ function Profile() {
 
 export default withPageAuthRequired(Profile, {
   onRedirecting: () => <Loading />,
-  onError: (error) => alert(error.message),
+  onError: (error) => <Error error={error} />,
 });
