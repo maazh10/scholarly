@@ -4,13 +4,10 @@ import type { AppProps } from "next/app";
 
 import Layout from "../components/Layout";
 
-import "@fortawesome/fontawesome-svg-core/styles.css";
-import initFontAwesome from "../utils/initFontAwesome";
-import "../styles/globals.css";
+import "../styles/globals.scss";
+import "../styles/navbar.scss";
 
-initFontAwesome();
-
-export default function App({ Component, pageProps }: AppProps) {
+const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <UserProvider>
       <Layout>
@@ -18,4 +15,6 @@ export default function App({ Component, pageProps }: AppProps) {
       </Layout>
     </UserProvider>
   );
-}
+};
+
+export default App;

@@ -1,199 +1,71 @@
-import React, { useState } from "react";
-import {
-  Collapse,
-  Container,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from "reactstrap";
+import React, { useRef, useEffect } from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
 
-import PageLink from "./PageLink";
-import AnchorLink from "./AnchorLink";
-
-const NavBar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const NavBar: React.FC = () => {
   const { user, isLoading } = useUser();
-  const toggle = () => setIsOpen(!isOpen);
+  const [showDropdown, setShowDropdown] = React.useState<boolean>(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (ref.current && !ref.current.contains(event.target as Node)) {
+      setShowDropdown(false);
+    }
+  };
 
   return (
-    <div className="nav-container" data-testid="navbar">
-      <Navbar color="light" light expand="md">
-        <Container>
-          <NavbarBrand className="logo" />
-          <NavbarToggler onClick={toggle} data-testid="navbar-toggle" />
-          <Collapse isOpen={isOpen} navbar>
-            <Nav className="mr-auto" navbar data-testid="navbar-items">
-              <NavItem>
-                <PageLink
-                  href="/"
-                  className="nav-link"
-                  testId="navbar-home"
-                  icon={undefined}
-                  tabIndex={undefined}
-                >
-                  Home
-                </PageLink>
-              </NavItem>
-              {user && (
-                <>
-                  <NavItem>
-                    <PageLink
-                      href="/csr"
-                      className="nav-link"
-                      testId="navbar-csr"
-                      icon={undefined}
-                      tabIndex={undefined}
-                    >
-                      Client-side rendered page
-                    </PageLink>
-                  </NavItem>
-                  <NavItem>
-                    <PageLink
-                      href="/ssr"
-                      className="nav-link"
-                      testId="navbar-ssr"
-                      icon={undefined}
-                      tabIndex={undefined}
-                    >
-                      Server-side rendered page
-                    </PageLink>
-                  </NavItem>
-                </>
-              )}
-            </Nav>
-            <Nav className="d-none d-md-block" navbar>
-              {!isLoading && !user && (
-                <NavItem id="qsLoginBtn">
-                  <AnchorLink
-                    href="/api/auth/login"
-                    className="btn btn-primary btn-margin"
-                    tabIndex={0}
-                    testId="navbar-login-desktop"
-                    icon={undefined}
-                  >
-                    Log in
-                  </AnchorLink>
-                </NavItem>
-              )}
-              {user && (
-                <UncontrolledDropdown
-                  nav
-                  inNavbar
-                  data-testid="navbar-menu-desktop"
-                >
-                  <DropdownToggle nav caret id="profileDropDown">
-                    <img
-                      src={user.picture != null ? user.picture : ""}
-                      alt="Profile"
-                      className="nav-user-profile rounded-circle"
-                      width="50"
-                      height="50"
-                      data-testid="navbar-picture-desktop"
-                    />
-                  </DropdownToggle>
-                  <DropdownMenu>
-                    <DropdownItem header data-testid="navbar-user-desktop">
-                      {user.name}
-                    </DropdownItem>
-                    <DropdownItem className="dropdown-profile" tag="span">
-                      <PageLink
-                        href="/profile"
-                        icon="user"
-                        testId="navbar-profile-desktop"
-                        className={undefined}
-                        tabIndex={undefined}
-                      >
-                        Profile
-                      </PageLink>
-                    </DropdownItem>
-                    <DropdownItem id="qsLogoutBtn">
-                      <AnchorLink
-                        href="/api/auth/logout"
-                        icon="power-off"
-                        testId="navbar-logout-desktop"
-                        className={undefined}
-                        tabIndex={undefined}
-                      >
-                        Log out
-                      </AnchorLink>
-                    </DropdownItem>
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-              )}
-            </Nav>
-            {!isLoading && !user && (
-              <Nav className="d-md-none" navbar>
-                <AnchorLink
-                  href="/api/auth/login"
-                  className="btn btn-primary btn-block"
-                  tabIndex={0}
-                  testId="navbar-login-mobile"
-                  icon={undefined}
-                >
-                  Log in
-                </AnchorLink>
-              </Nav>
-            )}
-            {user && (
-              <Nav
-                id="nav-mobile"
-                className="d-md-none justify-content-between"
-                navbar
-                data-testid="navbar-menu-mobile"
-              >
-                <NavItem>
-                  <span className="user-info">
-                    <img
-                      src={user.picture != null ? user.picture : ""}
-                      alt="Profile"
-                      className="nav-user-profile d-inline-block rounded-circle mr-3"
-                      width="50"
-                      height="50"
-                      data-testid="navbar-picture-mobile"
-                    />
-                    <h6
-                      className="d-inline-block"
-                      data-testid="navbar-user-mobile"
-                    >
-                      {user.name}
-                    </h6>
-                  </span>
-                </NavItem>
-                <NavItem>
-                  <PageLink
-                    href="/profile"
-                    icon="user"
-                    testId="navbar-profile-mobile"
-                    className={undefined}
-                    tabIndex={undefined}
-                  >
-                    Profile
-                  </PageLink>
-                </NavItem>
-                <NavItem id="qsLogoutBtn">
-                  <AnchorLink
-                    href="/api/auth/logout"
-                    className="btn btn-link p-0"
-                    icon="power-off"
-                    testId="navbar-logout-mobile"
-                    tabIndex={undefined}
-                  >
-                    Log out
-                  </AnchorLink>
-                </NavItem>
-              </Nav>
-            )}
-          </Collapse>
-        </Container>
-      </Navbar>
-    </div>
+    <nav className="navbar">
+      <div className="logo">
+        <a href="/">
+          <img src="/logo-transparent-png.png" alt="Logo" />
+        </a>
+      </div>
+      <div className="navbar-links">
+        <a href="/">Home</a>
+        {user && (
+          <>
+            <a href="/csr">Client-side rendered page</a>
+          </>
+        )}
+        <a href="/about">About Us</a>
+        <a href="/contact">Contact Us</a>
+      </div>
+      {!isLoading && !user && (
+        <a className="login-btn" href="/api/auth/login">
+          Login
+        </a>
+      )}
+      {!isLoading && user && (
+        <div ref={ref} className="profile-dropdown">
+          <img
+            src={user.picture != null ? user.picture : ""}
+            alt="Circle"
+            className="profile-image"
+            onMouseOver={() => setShowDropdown(true)}
+            onClick={() => setShowDropdown(true)}
+          />
+          {showDropdown && (
+            <ul
+              className="pfp-dropdown-menu"
+              onMouseEnter={() => setShowDropdown(true)}
+            >
+              <a href="/profile">
+                <li>Profile</li>
+              </a>
+              <a href="/api/auth/logout">
+                <li>Logout</li>
+              </a>
+            </ul>
+          )}
+        </div>
+      )}
+    </nav>
   );
 };
 

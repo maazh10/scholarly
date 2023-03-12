@@ -1,0 +1,117 @@
+@import "./globals.scss";
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 70px;
+  background-color: $secondary-color;
+  padding: 0 20px;
+  border-bottom: 1px solid white;
+}
+
+.logo {
+  cursor: pointer;
+
+  img {
+    width: 70px;
+    height: 60px;
+    border-radius: 50%;
+  }
+}
+
+.navbar-links {
+  width: 70%;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 50px;
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 0 10px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  a:hover {
+    background-color: $primary-color;
+  }
+}
+
+.login-btn {
+  background-color: $primary-color;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  text-decoration: none;
+}
+
+.login-btn:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+.pfp {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.profile-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.profile-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid $secondary-color;
+  cursor: pointer;
+}
+
+.pfp-dropdown-menu {
+  padding: 0;
+  position: absolute;
+  top: 40px;
+  right: -10px;
+  width: 100px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+
+  li {
+    width: 100%;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 0;
+  }
+
+  li:hover {
+    background-color: $primary-color;
+  }
+
+  a {
+    width: 100%;
+    color: black;
+    text-decoration: none;
+  }
+}

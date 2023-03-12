@@ -1,7 +1,11 @@
 import React from "react";
-import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
+import { withPageAuthRequired, useUser } from "@auth0/nextjs-auth0/client";
+import Loading from "@/components/Loading";
+import Error from "../components/Error";
 
-export default withPageAuthRequired(function SSRPage() {
+const CSRPage: React.FC = () => {
+  const { user, isLoading } = useUser();
+
   return (
     <>
       <div className="mb-5" data-testid="csr">
@@ -27,8 +31,14 @@ export default withPageAuthRequired(function SSRPage() {
             You can also fetch the user profile by calling the{" "}
             <code>/api/auth/me</code> API route.
           </p>
+          <p>{JSON.stringify(user, null, 2)}</p>
         </div>
       </div>
     </>
   );
+};
+
+export default withPageAuthRequired(CSRPage, {
+  onRedirecting: () => <Loading />,
+  onError: (error) => <Error error={error} />,
 });
