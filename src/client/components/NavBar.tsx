@@ -1,10 +1,10 @@
 import React, { useRef, useEffect } from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
 
-const NavBar = () => {
+const NavBar: React.FC = () => {
   const { user, isLoading } = useUser();
-  const [showDropdown, setShowDropdown] = React.useState(false);
-  const ref = useRef(null);
+  const [showDropdown, setShowDropdown] = React.useState<boolean>(false);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -13,8 +13,8 @@ const NavBar = () => {
     };
   }, []);
 
-  const handleClickOutside = (event) => {
-    if (ref.current && !ref.current.contains(event.target)) {
+  const handleClickOutside = (event: MouseEvent) => {
+    if (ref.current && !ref.current.contains(event.target as Node)) {
       setShowDropdown(false);
     }
   };
@@ -31,16 +31,15 @@ const NavBar = () => {
         {user && (
           <>
             <a href="/csr">Client-side rendered page</a>
-            <a href="/ssr">Server-side rendered page</a>
           </>
         )}
         <a href="/about">About Us</a>
         <a href="/contact">Contact Us</a>
       </div>
       {!isLoading && !user && (
-        <button className="login-btn">
-          <a href="/api/auth/login">Login</a>
-        </button>
+        <a className="login-btn" href="/api/auth/login">
+          Login
+        </a>
       )}
       {!isLoading && user && (
         <div ref={ref} className="profile-dropdown">

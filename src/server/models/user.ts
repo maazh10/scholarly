@@ -20,10 +20,6 @@ export const User = sequelize.define(
         isEmail: true,
       },
     },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
   },
   {
     tableName: "users",

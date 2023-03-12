@@ -16,6 +16,7 @@ app.use(bodyParser.json());
 app.use("/api/users", userRouter);
 
 app.get("/api/hello", (req, res) => {
+  console.log("Hello from the server!");
   res.json({ message: "Hello from the server!" });
 });
 

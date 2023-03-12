@@ -7,7 +7,7 @@ import Layout from "../components/Layout";
 import "../styles/globals.scss";
 import "../styles/navbar.scss";
 
-export default function App({ Component, pageProps }: AppProps) {
+const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <UserProvider>
       <Layout>
@@ -15,4 +15,6 @@ export default function App({ Component, pageProps }: AppProps) {
       </Layout>
     </UserProvider>
   );
-}
+};
+
+export default App;
