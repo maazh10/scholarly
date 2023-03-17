@@ -1,7 +1,7 @@
 import React from "react";
 import { withPageAuthRequired, useUser } from "@auth0/nextjs-auth0/client";
 import Loading from "@/components/Loading";
-import Error from "../components/Error";
+import Error from "@/components/Error";
 
 const CSRPage: React.FC = () => {
   const { user, isLoading } = useUser();

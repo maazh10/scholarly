@@ -30,6 +30,7 @@ const NavBar: React.FC = () => {
         <a href="/">Home</a>
         {user && (
           <>
+            <a href="/call">Call</a>
             <a href="/csr">Client-side rendered page</a>
           </>
         )}
