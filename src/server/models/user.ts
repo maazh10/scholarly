@@ -1,8 +1,27 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../datasource";
 
-export const User = sequelize.define(
-  "User",
+interface UserAttributes {
+  id?: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  userType: string;
+}
+
+class User extends Model<UserAttributes> implements UserAttributes {
+  public id!: number;
+  public firstName!: string;
+  public lastName!: string;
+  public email!: string;
+  public password!: string;
+  public userType!: string;
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+}
+
+User.init(
   {
     firstName: {
       type: DataTypes.STRING,
@@ -20,8 +39,22 @@ export const User = sequelize.define(
         isEmail: true,
       },
     },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    userType: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        isIn: [["student", "tutor"]],
+      },
+    }
   },
   {
     tableName: "users",
+    sequelize,
   }
 );
+
+export { User };

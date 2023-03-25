@@ -4,6 +4,8 @@
     "module": "commonjs",
     "target": "es6",
     "sourceMap": true,
-    "outDir": "./server/dist"
+    "outDir": "./server/dist",
+    "strict": false,
+    "allowJs": true,
   }
 }
