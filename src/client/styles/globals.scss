@@ -1,7 +1,3 @@
-$primary-color: #00abe4;
-$secondary-color: #102036;
-$tertiary-color: #1f1f1f;
-
 body {
   font-family: "Roboto", sans-serif;
   font-size: 16px;
@@ -10,4 +6,8 @@ body {
   background-color: #000000;
   margin: 0;
   padding: 0;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }

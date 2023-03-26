@@ -5,20 +5,26 @@ dotenv.config();
 import { sequelize } from "./datasource";
 import { userRouter } from "./routers/userRouter";
 import session from 'express-session';
+import cors from "cors"
 
 export const app = express();
 app.use(bodyParser.json());
 
-app.use(session({
-  secret: ':)',
-  resave: false,
-  saveUninitialized: true
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true
 }));
 
 (async () => {
   await sequelize.sync({ alter: { drop: false } });
   console.log("Connected to database!");
 })();
+
+app.use(session({
+  secret: 'test',
+  resave: false,
+  saveUninitialized: true
+}));
 
 app.use("/api/users", userRouter);
 

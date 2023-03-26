@@ -2,19 +2,35 @@ import { User } from "../models/user";
 import { Student } from "../models/student";
 import { Tutor } from "../models/tutor";
 import { Request, Response } from "express";
-import { Op } from "sequelize";
 import { Session } from "express-session";
 import bcrypt from "bcrypt";
 
 interface UserSession extends Session {
-  userId?: number;
+  user?: {
+    id: number;
+  };
 }
 
 const signup = async (req: Request & { session: UserSession }, res: Response) => {
   if (!req.body?.email || !req.body?.password || !req.body?.firstName || !req.body?.lastName || !req.body?.userType) {
-    res.status(400).json({ error: "missing required params" });
+    res.status(400).json({ error: "Missing required params" });
     return;
   }
+
+  const conflict = await User.findOne({ where: { email: req.body.email } });
+  if (conflict) {
+    res.status(409).json({ error: "Email already exists. Please login." });
+    return;
+  }
+
+  if (req.body.password.length < 6) {
+    res.status(400).json({ error: "Password must be at least 6 characters" });
+    return;
+  } else if (!req.body.password.match(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9!@#\$%\^&\*])(?=.{6,})/)) {
+    res.status(400).json({ error: "Password must contain at least one uppercase letter, one lowercase letter and/or one number" });
+    return;
+  }
+
   let user;
   try {
     const saltRounds = 10;
@@ -24,61 +40,60 @@ const signup = async (req: Request & { session: UserSession }, res: Response) =>
       firstName: req.body.firstName.toString(),
       lastName: req.body.lastName.toString(),
       email: req.body.email.toString(),
+      phoneNumber: req.body.phoneNumber?.toString(),
+      bio: req.body.bio?.toString(),
       userType: req.body.userType.toString(),
       password,
     });
     if (req.body.userType === 'student') {
-      if (!req.body.school) {
-        res.status(400).json({ error: "missing required params" });
-        return;
-      }
       await Student.create({
         UserId: user.dataValues.id,
-        school: req.body.school.toString(),
+        school: req.body?.school.toString(),
       });
     } else if (req.body.userType === 'tutor') {
-      if (!req.body.specialities) {
-        res.status(400).json({ error: "missing required params" });
+      if (!req.body.specialities || !req.body.rate) {
+        res.status(400).json({ error: "Missing required params" });
         return;
       }
       await Tutor.create({
         UserId: user.dataValues.id,
         specialities: req.body.specialities,
+        rate: req.body.rate.toString(),
       });
     } else {
-      res.status(400).json({ error: "invalid user type" });
+      res.status(400).json({ error: "Invalid user type" });
       return;
     }
   } catch(e) {
     return res.status(422).json({ error: e.message });
   }
-  req.session.userId = user.id;
+  req.session.user = { id: user.id };
   res.status(201).json({ success: true, email: user.email });
 };
 
 const login = async (req: Request & { session: UserSession }, res: Response) => {
   if (!req.body?.email || !req.body?.password) {
-    res.status(400).json({ error: "missing required params" });
+    res.status(400).json({ error: "Missing required params" });
     return;
   }
   const user = await User.findOne({ where: { email: req.body?.email } });
   if (!user) {
-    res.status(401).json({ error: "incorrect email or password" });
+    res.status(401).json({ error: "Incorrect email or password" });
     return;
   }
   const passwordMatch = bcrypt.compareSync(req.body.password, user.password);
   if (!passwordMatch) {
-    res.status(401).json({ error: "incorrect email or password" });
+    res.status(401).json({ error: "Incorrect email or password" });
     return;
   }
-  req.session.userId = user.id;
-  res.status(200).json({ success: true, email: user.email });
+  req.session.user = { id: user.id }
+  res.status(200).json({ success: true, user: req.session.user });
 }
 
 const logout = async (req: Request & { session: UserSession }, res: Response) => {
   req.session.destroy((err) => {
     if (err) {
-      res.status(500).json({ error: "failed to logout" });
+      res.status(500).json({ error: "Failed to logout" });
       return;
     }
     res.status(200).json({ success: true });
@@ -86,8 +101,19 @@ const logout = async (req: Request & { session: UserSession }, res: Response) =>
 };
 
 const getUser = async (req: Request & { session: UserSession }, res: Response) => {
-  const user = await User.findOne({ where: { id: req.session.userId } });
-  res.status(200).json({ email: user.email, firstName: user.firstName, lastName: user.lastName, userType: user.userType });
+  const user = await User.findOne({ where: { id: req.session.user.id }, include: [{ model: Student }, { model: Tutor }] });
+  if (!user) {
+    res.status(404).json({ error: "User not found" });
+    return;
+  }
+  if (user.userType === 'student') {
+    const student = await Student.findOne({ where: { UserId: user.id } });
+    res.status(200).json({ user: { email: user.email, firstName: user.firstName, lastName: user.lastName, bio: user.bio, phoneNumber: user.phoneNumber, userType: user.userType, school: student?.school } });
+  } else if (user.userType === 'tutor') {
+    const tutor = await Tutor.findOne({ where: { UserId: user.id } });
+    res.status(200).json({ user: { email: user.email, firstName: user.firstName, lastName: user.lastName, phoneNumber: user.phoneNumber, bio: user.bio, userType: user.userType, specialities: tutor?.specialities, rate: tutor?.rate } });
+    return;
+  }
 }
 
 const getUsers = async (req: Request & { session: UserSession }, res: Response) => {

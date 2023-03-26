@@ -7,6 +7,8 @@ interface UserAttributes {
   lastName: string;
   email: string;
   password: string;
+  phoneNumber?: string;
+  bio?: string;
   userType: string;
 }
 
@@ -17,6 +19,8 @@ class User extends Model<UserAttributes> implements UserAttributes {
   public email!: string;
   public password!: string;
   public userType!: string;
+  public phoneNumber?: string;
+  public bio?: string;
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
@@ -43,13 +47,21 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    phoneNumber: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    bio: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     userType: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         isIn: [["student", "tutor"]],
       },
-    }
+    },
   },
   {
     tableName: "users",

@@ -1,40 +1,49 @@
 import React from "react";
-import { useUser, withPageAuthRequired } from "@auth0/nextjs-auth0/client";
-
 import Loading from "../components/Loading";
-import Error from "../components/Error";
+import apiService from "../services/apiService";
+import { useRouter } from "next/router";
 
-const Profile = () => {
-  const { user, isLoading } = useUser();
+export default function Profile() {
+  const [user, setUser] = React.useState<any>(null);
+  const router = useRouter();
+
+  const checkAuth = async () => {
+    try {
+      const data = await apiService.get("/users/me");
+      const loggedInUser = (data as { user: any }).user;
+      setUser(loggedInUser);
+    } catch (err) {
+      router.push("/login");
+    }
+  };
+
+  React.useEffect(() => {
+    checkAuth();
+  }, []);
 
   return (
     <>
-      {isLoading && <Loading />}
-      {user && (
-        <>
-          <div data-testid="profile">
-            <div>
-              <img
-                src={user.picture}
-                alt="Profile"
-                data-testid="profile-picture"
-              />
-            </div>
-            <div>
-              <h2>{user.name}</h2>
-              <p className="lead text-muted" data-testid="profile-email">
-                {user.email}
-              </p>
-            </div>
-          </div>
-          <div>{JSON.stringify(user, null, 2)}</div>
-        </>
+      <h1>Profile</h1>
+      {!user && <Loading />}
+      {user && user.userType === "tutor" && (
+        <div>
+          <h2>{user.firstName + " " + user.lastName}</h2>
+          <h2>{user.email}</h2>
+          <h2>{user.phoneNumber}</h2>
+          <h2>{user.bio}</h2>
+          <h2>{user.school}</h2>
+          <h2>{user.specialities}</h2>
+          <h2>{user.rate}</h2>
+        </div>
+      )}
+      {user && user.userType === "student" && (
+        <div>
+          <h2>{user.firstName + " " + user.lastName}</h2>
+          <h2>{user.email}</h2>
+          <h2>{user.phoneNumber}</h2>
+          <h2>{user.bio}</h2>
+        </div>
       )}
     </>
   );
-};
-
-export default withPageAuthRequired(Profile, {
-  onRedirecting: () => <Loading />,
-  onError: (error) => <Error error={error} />,
-});
+}

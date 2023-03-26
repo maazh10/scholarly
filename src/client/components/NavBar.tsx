@@ -1,10 +1,33 @@
 import React, { useRef, useEffect } from "react";
-import { useUser } from "@auth0/nextjs-auth0/client";
+import apiService from "../services/apiService";
+import { useRouter } from "next/router";
+import styles from "../styles/navbar.module.scss";
 
 const NavBar: React.FC = () => {
-  const { user, isLoading } = useUser();
+  const [user, setUser] = React.useState<any>(null);
   const [showDropdown, setShowDropdown] = React.useState<boolean>(false);
   const ref = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+
+  const checkAuth = async () => {
+    try {
+      const data = await apiService.get("/users/me");
+      const loggedInUser = (data as { user: any }).user;
+      setUser(loggedInUser);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleLogout = async () => {
+    await apiService.get("/users/logout");
+    setUser(null);
+    router.push("/");
+  };
+
+  useEffect(() => {
+    checkAuth();
+  }, [router.pathname]);
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -20,46 +43,45 @@ const NavBar: React.FC = () => {
   };
 
   return (
-    <nav className="navbar">
-      <div className="logo">
+    <nav className={styles.navbar}>
+      <div className={styles.logo}>
         <a href="/">
           <img src="/logo-transparent-png.png" alt="Logo" />
         </a>
       </div>
-      <div className="navbar-links">
+      <div className={styles.navbarLinks}>
         <a href="/">Home</a>
         {user && (
           <>
             <a href="/call">Call</a>
-            <a href="/csr">Client-side rendered page</a>
           </>
         )}
         <a href="/about">About Us</a>
         <a href="/contact">Contact Us</a>
       </div>
-      {!isLoading && !user && (
-        <a className="login-btn" href="/api/auth/login">
+      {!user && (
+        <a className={styles.loginBtn} href="/login">
           Login
         </a>
       )}
-      {!isLoading && user && (
-        <div ref={ref} className="profile-dropdown">
+      {user && (
+        <div ref={ref} className={styles.profileDropdown}>
           <img
-            src={user.picture != null ? user.picture : ""}
-            alt="Circle"
-            className="profile-image"
+            src={user.picture != null ? user.picture : "/user.png"}
+            alt="Profile"
+            className={styles.profilePic}
             onMouseOver={() => setShowDropdown(true)}
             onClick={() => setShowDropdown(true)}
           />
           {showDropdown && (
             <ul
-              className="pfp-dropdown-menu"
+              className={styles.pfpDropdownMenu}
               onMouseEnter={() => setShowDropdown(true)}
             >
               <a href="/profile">
                 <li>Profile</li>
               </a>
-              <a href="/api/auth/logout">
+              <a onClick={handleLogout}>
                 <li>Logout</li>
               </a>
             </ul>
