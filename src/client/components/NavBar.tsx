@@ -51,11 +51,7 @@ const NavBar: React.FC = () => {
       </div>
       <div className={styles.navbarLinks}>
         <a href="/">Home</a>
-        {user && (
-          <>
-            <a href="/call">Call</a>
-          </>
-        )}
+        {user && <a href="/dashboard">Dashboard</a>}
         <a href="/about">About Us</a>
         <a href="/contact">Contact Us</a>
       </div>

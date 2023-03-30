@@ -108,10 +108,10 @@ const getUser = async (req: Request & { session: UserSession }, res: Response) =
   }
   if (user.userType === 'student') {
     const student = await Student.findOne({ where: { UserId: user.id } });
-    res.status(200).json({ user: { email: user.email, firstName: user.firstName, lastName: user.lastName, bio: user.bio, phoneNumber: user.phoneNumber, userType: user.userType, school: student?.school } });
+    res.status(200).json({ user: { userId: user.id, studentId: student.id, email: user.email, firstName: user.firstName, lastName: user.lastName, bio: user.bio, phoneNumber: user.phoneNumber, userType: user.userType, school: student?.school } });
   } else if (user.userType === 'tutor') {
     const tutor = await Tutor.findOne({ where: { UserId: user.id } });
-    res.status(200).json({ user: { email: user.email, firstName: user.firstName, lastName: user.lastName, phoneNumber: user.phoneNumber, bio: user.bio, userType: user.userType, specialities: tutor?.specialities, rate: tutor?.rate } });
+    res.status(200).json({ user: { userId: user.id, tutorId: tutor.id, email: user.email, firstName: user.firstName, lastName: user.lastName, phoneNumber: user.phoneNumber, bio: user.bio, userType: user.userType, specialities: tutor?.specialities, rate: tutor?.rate } });
     return;
   }
 }
@@ -124,6 +124,24 @@ const getUsers = async (req: Request & { session: UserSession }, res: Response) 
     limit,
   });
   res.json({ users: users });
+};
+
+const getStudent = async (req: Request & { session: UserSession }, res: Response) => {
+  const student = await Student.findOne({ where: { UserId: req.params.id }, include: [{ model: User }] });
+  if (!student) {
+    res.status(404).json({ error: "Student not found" });
+    return;
+  }
+  res.status(200).json({ student: student });
+};
+
+const getTutor = async (req: Request & { session: UserSession }, res: Response) => {
+  const tutor = await Tutor.findOne({ where: { UserId: req.params.id }, include: [{ model: User }] });
+  if (!tutor) {
+    res.status(404).json({ error: "Tutor not found" });
+    return;
+  }
+  res.status(200).json({ tutor: tutor });
 };
 
 const getStudents = async (req: Request & { session: UserSession }, res: Response) => {
@@ -152,6 +170,8 @@ export const userController = {
   logout,
   getUser,
   getUsers,
+  getStudent,
+  getTutor,
   getStudents,
   getTutors,
 };

@@ -3,12 +3,15 @@ import { sequelize } from "../datasource";
 import { User } from "./user";
 
 interface TutorAttributes {
+    id?: number;
     UserId?: number;
     specialities?: string[];
     rate?: number;
 }
 
 class Tutor extends Model<TutorAttributes> implements TutorAttributes {
+    public id!: number;
+    public UserId!: number;
     public specialities!: string[];
     public rate!: number;
 }
