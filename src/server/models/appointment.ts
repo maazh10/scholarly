@@ -4,6 +4,7 @@ import { Student } from "./student";
 import { Tutor } from "./tutor";
 
 interface AppointmentAttributes {
+    id?: number;
     StudentId?: number;
     TutorId?: number;
     startTime?: Date;
@@ -13,6 +14,7 @@ interface AppointmentAttributes {
 }
 
 class Appointment extends Model<AppointmentAttributes> implements AppointmentAttributes {
+    public id!: number;
     public StudentId!: number;
     public TutorId!: number;
     public startTime!: Date;

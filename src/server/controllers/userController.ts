@@ -4,6 +4,7 @@ import { Tutor } from "../models/tutor";
 import { Request, Response } from "express";
 import { Session } from "express-session";
 import bcrypt from "bcrypt";
+import { Op } from "sequelize";
 
 interface UserSession extends Session {
   user?: {
@@ -155,11 +156,22 @@ const getStudents = async (req: Request & { session: UserSession }, res: Respons
 };
 
 const getTutors = async (req: Request & { session: UserSession }, res: Response) => {
+  if(!req.query.subject) {
+    res.status(400).json({ error: "Missing subject" });
+    return;
+  }
   const page = req.query.page ? parseInt(req.query.page.toString()) : 0;
   const limit = req.query.limit ? parseInt(req.query.limit.toString()) : 10;
+  const subject = req.query.subject.toString();
   const tutors = await Tutor.findAll({
     offset: page * limit,
     limit,
+    where: {
+      specialities: {
+        [Op.contains]: [subject],
+      },
+    },
+    include: [{ model: User }],
   });
   res.json({ tutors: tutors });
 };

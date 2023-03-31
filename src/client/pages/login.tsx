@@ -122,7 +122,7 @@ export default function Login() {
       />
       <div className={styles.container}>
         <img
-          src="/logo-transparent-png.png"
+          src="/logo-transparent-dark.png"
           alt="Logo"
           className={styles.logo}
         />

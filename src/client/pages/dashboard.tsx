@@ -1,6 +1,7 @@
 import React from "react";
 import apiService from "@/services/apiService";
 import { useRouter } from "next/router";
+import Loading from "@/components/Loading";
 
 export default function Dashboard() {
   const [bookings, setBookings] = React.useState([]);
@@ -29,9 +30,8 @@ export default function Dashboard() {
 
   return (
     <div>
-      <h1>My Bookings</h1>
       {loading ? (
-        <p>Loading...</p>
+        <Loading />
       ) : (
         <ul>
           {bookings.map((booking) => (

@@ -1,10 +1,9 @@
 import React from "react";
 
+import styles from "../styles/components/loading.module.scss";
+
 const Loading = () => (
-  <div
-    className="spinner d-flex align-items-center justify-content-center w-100 h-100"
-    data-testid="loading"
-  >
+  <div className={styles.loading}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="120"
