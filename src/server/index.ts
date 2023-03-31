@@ -3,9 +3,13 @@ import bodyParser from "body-parser";
 import dotenv from "dotenv";
 dotenv.config();
 import { sequelize } from "./datasource";
-import { userRouter } from "./routers/userRouter";
+
 import session from 'express-session';
 import cors from "cors"
+
+import { userRouter } from "./routers/userRouter";
+import { appointmentRouter } from "./routers/appointmentRouter";
+import { sessionRouter } from "./routers/sessionRouter";
 
 export const app = express();
 app.use(bodyParser.json());
@@ -27,6 +31,9 @@ app.use(session({
 }));
 
 app.use("/api/users", userRouter);
+app.use("/api/appointments", appointmentRouter);
+app.use("/api/sessions", sessionRouter);
+
 
 app.get("/api/hello", (req, res) => {
   console.log("Hello from the server!");

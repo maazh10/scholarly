@@ -1,11 +1,21 @@
 import React from "react";
 
-const Index: React.FC = () => {
-  return (
-    <>
-      <h1>Scholarly</h1>
-    </>
-  );
-};
+import styles from "../styles/home.module.scss";
 
-export default Index;
+export default function Index() {
+  return (
+    <div className={styles.page}>
+      <div className={styles.top}>
+        <div className={styles.top__left}>
+          <h3 className={styles.top__welcome}>Welcome to</h3>
+          <h1 className={styles.top__title}>Scholarly.</h1>
+        </div>
+        <div className={styles.top__right}>
+          <a href="/login">
+            <button className={styles.started}>Get Started</button>
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}

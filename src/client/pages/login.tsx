@@ -1,9 +1,10 @@
 import { useState } from "react";
-import styles from "../styles/login.module.scss";
 import apiService from "../services/apiService";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import styles from "../styles/login.module.scss";
 
 export default function Login() {
   const [selectedOption, setSelectedOption] = useState("");
@@ -121,7 +122,7 @@ export default function Login() {
       />
       <div className={styles.container}>
         <img
-          src="/logo-transparent-png.png"
+          src="/logo-transparent-dark.png"
           alt="Logo"
           className={styles.logo}
         />

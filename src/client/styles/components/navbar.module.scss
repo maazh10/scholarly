@@ -1,4 +1,4 @@
-@import "./variables.scss";
+@import "../variables.scss";
 
 .navbar {
   display: flex;
@@ -107,7 +107,7 @@
   }
 
   li:hover {
-    background-color: $primary-color;
+    background-color: $button-color;
   }
 
   a {

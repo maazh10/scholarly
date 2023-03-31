@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Loading from "../components/Loading";
 import apiService from "../services/apiService";
 import { useRouter } from "next/router";
@@ -17,7 +17,7 @@ export default function Profile() {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     checkAuth();
   }, []);
 

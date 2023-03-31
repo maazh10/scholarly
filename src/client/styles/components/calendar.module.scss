@@ -1,0 +1,40 @@
+@import "../variables.scss";
+
+.calendar {
+  width: 90vw;
+  height: 90vh;
+  margin: 0 auto;
+  background-color: white;
+  color: black;
+  padding: 1.5rem 2.5rem;
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+
+  button {
+    background-color: $button-color;
+    color: white;
+    padding: 1rem;
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    font-size: 20px;
+
+    &:hover {
+      background-color: black;
+      color: white;
+    }
+  }
+
+  .fc {
+    background-color: rgb(236, 250, 255);
+  }
+
+  .dhFC {
+    background-color: $secondary-color;
+    color: white;
+  }
+}

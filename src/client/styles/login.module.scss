@@ -9,15 +9,15 @@
     justify-content: center;
 
     .container {
+        background-color: #e2f6ff;
         padding: 2rem;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        background-color: $tertiary-color;
         width: 30rem;
         border-radius: 30px;
-        border: 1px solid white;
+        border: 3px solid $primary-color;
 
         .logo {
             width: 9rem;
@@ -53,15 +53,15 @@
               padding: 0.5rem;
               border-radius: 0.25rem;
               border: none;
-              background-color: #0070f3;
+              background-color: $button-color;
               color: #fff;
               cursor: pointer;
               transition: all 0.3s ease-in-out;
             }
 
             button:hover {
-                background-color: white;
-                color: black;
+                background-color: $tertiary-color;
+                color: white;
             }
           }
         
@@ -72,7 +72,7 @@
               margin-left: 0.25rem;
               border: none;
               background-color: transparent;
-              color: #0070f3;
+              color: $button-color;
               cursor: pointer;
             }
           }
@@ -105,7 +105,7 @@
               }
 
               &:hover {
-                background-color: #0070f3;
+                background-color: $button-color;
               }
             }
           
@@ -113,7 +113,7 @@
               display: none;
 
               &:checked + span {
-                background-color: #0070f3;
+                background-color: $button-color;
                 color: #fff;
               }
             }
@@ -141,7 +141,7 @@
             }
 
             &:checked {
-              background-color: #0070f3;
+              background-color: $button-color;
               color: #fff;
             }
           }

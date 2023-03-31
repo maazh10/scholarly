@@ -10,6 +10,8 @@ interface UserAttributes {
   phoneNumber?: string;
   bio?: string;
   userType: string;
+  Student?: any;
+  Tutor?: any;
 }
 
 class User extends Model<UserAttributes> implements UserAttributes {
@@ -21,6 +23,8 @@ class User extends Model<UserAttributes> implements UserAttributes {
   public userType!: string;
   public phoneNumber?: string;
   public bio?: string;
+  public Student?: any;
+  public Tutor?: any;
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }

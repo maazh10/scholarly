@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import apiService from "../services/apiService";
 import { useRouter } from "next/router";
-import styles from "../styles/navbar.module.scss";
+import styles from "../styles/components/navbar.module.scss";
 
 const NavBar: React.FC = () => {
   const [user, setUser] = React.useState<any>(null);
@@ -46,15 +46,13 @@ const NavBar: React.FC = () => {
     <nav className={styles.navbar}>
       <div className={styles.logo}>
         <a href="/">
-          <img src="/logo-transparent-png.png" alt="Logo" />
+          <img src="/logo-transparent.png" alt="Logo" />
         </a>
       </div>
       <div className={styles.navbarLinks}>
-        <a href="/">Home</a>
-        {user && (
-          <>
-            <a href="/call">Call</a>
-          </>
+        {user && <a href="/dashboard">Dashboard</a>}
+        {user && user.userType === "student" && (
+          <a href="/schedule">Schedule</a>
         )}
         <a href="/about">About Us</a>
         <a href="/contact">Contact Us</a>
