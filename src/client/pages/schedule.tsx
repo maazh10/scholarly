@@ -3,6 +3,7 @@ import Modal from "react-modal";
 import Calendar from "@/components/Calendar";
 import { useRouter } from "next/router";
 import apiService from "../services/apiService";
+import Loading from "@/components/Loading";
 
 import styles from "../styles/schedule.module.scss";
 
@@ -29,8 +30,14 @@ export default function Schedule() {
   }, []);
 
   return (
-    <div className={styles.page}>
-      <Calendar />
-    </div>
+    <>
+      {user ? (
+        <div className={styles.page}>
+          <Calendar />
+        </div>
+      ) : (
+        <Loading />
+      )}
+    </>
   );
 }

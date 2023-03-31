@@ -50,7 +50,6 @@ const NavBar: React.FC = () => {
         </a>
       </div>
       <div className={styles.navbarLinks}>
-        <a href="/">Home</a>
         {user && <a href="/dashboard">Dashboard</a>}
         {user && user.userType === "student" && (
           <a href="/schedule">Schedule</a>

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import apiService from "@/services/apiService";
+import Loading from "@/components/Loading";
 
 import styles from "../styles/meeting.module.scss";
 
@@ -19,7 +20,7 @@ export default function Meeting({ appointment, user, peer, session }) {
 
     peer.on("call", (call) => {
       const getUserMedia = navigator.mediaDevices.getUserMedia;
-      getUserMedia({ video: true, audio: true }).then((mediaStream) => {
+      getUserMedia({ video: true, audio: false }).then((mediaStream) => {
         getUserMedia({ video: true, audio: false }).then((myVideo) => {
           currentUserVideoRef.current.srcObject = myVideo;
           currentUserVideoRef.current.play();
@@ -40,7 +41,7 @@ export default function Meeting({ appointment, user, peer, session }) {
 
   const call = (remotePeerId) => {
     const getUserMedia = navigator.mediaDevices.getUserMedia;
-    getUserMedia({ video: true, audio: true }).then((mediaStream) => {
+    getUserMedia({ video: true, audio: false }).then((mediaStream) => {
       getUserMedia({ video: true, audio: false }).then((myVideo) => {
         currentUserVideoRef.current.srcObject = myVideo;
         currentUserVideoRef.current.play();
@@ -59,26 +60,32 @@ export default function Meeting({ appointment, user, peer, session }) {
   };
 
   const handleDisconnect = async () => {
-    callInstance.current.close();
+    if (callInstance.current) callInstance.current.close();
     peer.destroy();
     await apiService.delete("/sessions?appointmentId=" + appointment.id);
     router.push("/dashboard");
   };
 
   return (
-    <div className={styles.page}>
-      <div className={styles.videos}>
-        <div className={styles.video}>
-          <video ref={currentUserVideoRef} />
-          <p>My Video</p>
+    <>
+      {appointment ? (
+        <div className={styles.page}>
+          <div className={styles.videos}>
+            <div className={styles.video}>
+              <video ref={currentUserVideoRef} />
+              <p>My Video</p>
+            </div>
+            <div className={styles.video}>
+              <video ref={remoteVideoRef} />
+              <p>Remote Video</p>
+            </div>
+            <button onClick={handleDisconnect}>End Call</button>
+          </div>
         </div>
-        <div className={styles.video}>
-          <video ref={remoteVideoRef} />
-          <p>Remote Video</p>
-        </div>
-        <button onClick={handleDisconnect}>End Call</button>
-      </div>
-    </div>
+      ) : (
+        <Loading />
+      )}
+    </>
   );
 }
 
