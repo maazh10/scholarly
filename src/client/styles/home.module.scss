@@ -7,70 +7,81 @@
   justify-content: center;
   height: 85vh;
   text-align: center;
+  background: url("/bg.jpg");
+}
 
-  .top {
-    width: 100%;
-    height: 100%;
+.home{
+  height: 100vh;
+  scroll-snap-align: center;
+  display: flex;
+  justify-content: center;
+
+  .container{
+    height: 100vh;
+    scroll-snap-align: center;
+    width: 1400px;
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    justify-content: space-between;
+  }
 
-    .top__left {
-      flex: 0.6;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      background-color: $secondary-color;
-      padding: 0 100px;
+  .left{
+    flex: 1;
 
-      .top__welcome {
-        margin-top: 200px;
-        width: 200px;
-        font-size: 2rem;
-        font-weight: 600;
-        color: white;
-      }
-
-      .top__title {
-        margin: 0;
-        width: 500px;
-        font-size: 7rem;
-        font-weight: 600;
-        color: $primary-color;
-      }
-    }
-
-    .top__right {
-      flex: 0.4;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background-color: rgb(228, 248, 255);
-      transition: all 0.3s ease-in-out;
-
-      &:hover {
-        background-color: $primary-color;
-      }
-
-      button {
-        width: 200px;
-        height: 50px;
-        border: 1px solid yellowgreen;
-        border-radius: 50px;
-        background-color: transparent;
-        color: black;
-        font-size: 1.2rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease-in-out;
-
-        &:hover {
-          background-color: yellowgreen;
-          color: white;
-        }
-      }
+    @media only screen and (max-width: 768px) {
+      display: none;
     }
   }
+
+  .title{
+    font-size: 74px;
+
+    @media only screen and (max-width: 768px) {
+      font-size: 60px;
+    }
+  }
+  .right{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+  
+    @media only screen and (max-width: 768px) {
+      align-items: center;
+      text-align: center;
+    }
+  }
+
+  .what{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+   .line{
+    height: 5px;
+   }
+   .subtitle{
+    color: #da4ea2;
+   }
+   .desc{
+    font-size: 24px;
+    color: lightgray;
+   }
+
+   .button{
+    background-color: #da4ea2;
+    color: white;
+    font-weight: 500;
+    width: 120px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+
+   &:hover {
+    background-color: #f0a1d0;
+    color: white;
+  }
+}
 }
