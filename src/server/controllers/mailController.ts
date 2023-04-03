@@ -3,7 +3,6 @@ import sgMail from '@sendgrid/mail'
 
 const send = async (req: Request, res: Response) => {
   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-  console.log(process.env.SENDGRID_API_KEY)
   const {
     name,
     email,
@@ -11,7 +10,7 @@ const send = async (req: Request, res: Response) => {
   }: { name: string; email: string; message: string } = req.body;
   const msg = `Name: ${name}\r\n Email: ${email}\r\n Message: ${message}`;
   const data = {
-    to: "leilacheraghi81@gmail.com",
+    to: process.env.SENDGRID_REPLY_TO_EMAIL,
     from: `${email}`,
     subject: `${name.toUpperCase()} sent you a message from Contact Form`,
     text: `Email => ${email}`,
@@ -19,11 +18,11 @@ const send = async (req: Request, res: Response) => {
   };
   try {
     await sgMail.send(data);
-    res.status(200).json({ message: "Your message was sent successfully." });
+    res.status(200).json({ success: true, message: "Your message was sent successfully." });
   } catch (err) {
     res
       .status(500)
-      .json({ message: `There was an error sending your message. ${err}` });
+      .json({ success: false, message: `There was an error sending your message. ${err}` });
   }
 };
 
