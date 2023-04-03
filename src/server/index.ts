@@ -10,6 +10,7 @@ import cors from "cors"
 import { userRouter } from "./routers/userRouter";
 import { appointmentRouter } from "./routers/appointmentRouter";
 import { sessionRouter } from "./routers/sessionRouter";
+import { mailRouter } from "./routers/mailRouter";
 
 export const app = express();
 app.use(bodyParser.json());
@@ -33,7 +34,7 @@ app.use(session({
 app.use("/api/users", userRouter);
 app.use("/api/appointments", appointmentRouter);
 app.use("/api/sessions", sessionRouter);
-
+app.use("/api/mail",mailRouter);
 
 app.get("/api/hello", (req, res) => {
   console.log("Hello from the server!");
