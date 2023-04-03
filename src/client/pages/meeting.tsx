@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import apiService from "@/services/apiService";
 import Loading from "@/components/Loading";
+import Head from "next/head";
 
 import styles from "../styles/meeting.module.scss";
 
@@ -70,6 +71,9 @@ export default function Meeting({ appointment, user, peer, session }) {
     <>
       {appointment ? (
         <div className={styles.page}>
+          <Head>
+            <title>Meeting</title>
+          </Head>
           <div className={styles.videos}>
             <div className={styles.video}>
               <video ref={currentUserVideoRef} />

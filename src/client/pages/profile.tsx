@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Loading from "../components/Loading";
 import apiService from "../services/apiService";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 export default function Profile() {
   const [user, setUser] = React.useState<any>(null);
@@ -23,6 +24,9 @@ export default function Profile() {
 
   return (
     <>
+      <Head>
+        <title>Profile</title>
+      </Head>
       <h1>Profile</h1>
       {!user && <Loading />}
       {user && user.userType === "tutor" && (

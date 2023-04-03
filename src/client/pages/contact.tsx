@@ -13,7 +13,6 @@ const onSubmit = async (name: string, email: string, message: string) => {
       email,
       message,
     });
-    console.log(res);
     toast.success("Message sent successfully! We will get back to you soon.");
   } catch (error) {
     toast.error("Message failed to send!");

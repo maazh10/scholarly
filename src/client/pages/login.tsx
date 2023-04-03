@@ -3,6 +3,7 @@ import apiService from "../services/apiService";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Head from "next/head";
 
 import styles from "../styles/login.module.scss";
 
@@ -108,6 +109,9 @@ export default function Login() {
 
   return (
     <div style={{ height: pageHeight + "vh" }} className={styles.page}>
+      <Head>
+        <title>Login</title>
+      </Head>
       <ToastContainer
         position="top-center"
         autoClose={5000}

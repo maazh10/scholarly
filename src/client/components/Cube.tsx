@@ -3,7 +3,7 @@ import { PerspectiveCamera, RenderTexture, Text } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 
 const Cube = () => {
-  const textRef = useRef();
+  const textRef = useRef(null);
   useFrame(
     (state) =>
       (textRef.current.position.x = Math.sin(state.clock.elapsedTime) * 2)
@@ -16,7 +16,7 @@ const Cube = () => {
           <PerspectiveCamera makeDefault position={[0, 0, 5]} />
           <color attach="background" args={["#dc9dcd"]} />
           <Text ref={textRef} fontSize={3} color="#555">
-            hello
+            Scholarly
           </Text>
         </RenderTexture>
       </meshStandardMaterial>
