@@ -34,6 +34,12 @@ export default function AddAppointmentModal({ isOpen, onClose, onApptAdded }) {
       toast.error("Start date must be before end date");
       return;
     }
+    const diffInMs = end.diff(start);
+    const diffInHours = diffInMs / (1000 * 60 * 60);
+    if (diffInHours > 2) {
+      toast.error("The duration must be no more than 2 hours");
+      return;
+    }
     setSubject("");
     onApptAdded({ tutor: selectedTutor, subject, start, end, notes });
     onClose();

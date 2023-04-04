@@ -93,8 +93,8 @@ export default function Calendar() {
   const eventContent = (eventInfo) => {
     return (
       <div className={styles.event}>
-        <b>{eventInfo.timeText}</b>
-        <i>{eventInfo.event.title}</i>
+        <b className={styles.b}>{eventInfo.timeText}</b>
+        <i className={styles.info}>{eventInfo.event.title}</i>
         <button
           className={styles.deleteBtn}
           onClick={() =>

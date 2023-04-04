@@ -32,6 +32,7 @@
     "@react-three/drei": "^9.56.28",
     "@react-three/fiber": "^8.11.5",
     "@react-three/postprocessing": "^2.7.0",
+    "@sendgrid/client": "^7.7.0",
     "@sendgrid/helpers": "^7.7.0",
     "@sendgrid/mail": "^7.7.0",
     "@types/express-session": "^1.17.7",
@@ -63,8 +64,8 @@
     "sass": "^1.58.3",
     "sass-loader": "^13.2.0",
     "sequelize": "^6.29.0",
-    "twilio": "^4.9.0",
     "three": "^0.151.2",
+    "twilio": "^4.9.0",
     "typewriter-effect": "^2.19.0"
   },
   "devDependencies": {

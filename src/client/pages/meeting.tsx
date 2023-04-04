@@ -45,6 +45,15 @@ export default function Meeting({ appointment, user, peer, session }) {
         callInstance.current = call;
       });
     });
+
+    const handleMouseMove = () => {
+      setShowButton(true);
+      setTimeout(() => setShowButton(false), 2000); 
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
   }, []);
 
   const call = (remotePeerId) => {

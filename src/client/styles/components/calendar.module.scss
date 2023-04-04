@@ -4,8 +4,8 @@
   width: 90vw;
   height: 90vh;
   margin: 0 auto;
-  background-color: white;
-  color: black;
+  background-color: #1f4e85;
+  color: white;
   padding: 1.5rem 2.5rem;
   font-size: 0.8rem;
   display: flex;
@@ -25,6 +25,9 @@
     color: black;
     font-size: 1rem;
     transition: all 0.2s ease-in-out;
+    overflow-x: hidden;
+    overflow-y: auto;
+    flex-wrap: wrap;
 
     &:hover {
       background-color: $secondary-color;
@@ -46,8 +49,18 @@
       transition: all 0.2s ease-in-out;
 
       &:hover {
-        background-color: red;
+        background-color: rgb(224, 85, 85);
       }
+    }
+
+    .info{
+      white-space: nowrap;
+      overflow: hidden;
+      flex-grow: 1;
+    }
+
+    .b{
+      padding-right: 4px
     }
   }
 
@@ -62,7 +75,7 @@
     font-size: 20px;
 
     &:hover {
-      background-color: black;
+      background-color: $background-color;
       color: white;
     }
   }
@@ -71,8 +84,17 @@
     background-color: rgb(236, 250, 255);
   }
 
+  .fc-event-main {
+  overflow-x: hidden;
+  overflow-y: auto;  }
+
   .dhFC {
     background-color: $secondary-color;
     color: white;
+  }
+
+  .addEvent{
+    width: 40%;
+    margin: 0 auto; 
   }
 }
