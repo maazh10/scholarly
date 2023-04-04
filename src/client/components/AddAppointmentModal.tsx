@@ -72,6 +72,7 @@ export default function AddAppointmentModal({ isOpen, onClose, onApptAdded }) {
         <div className={styles.subject}>
           <label htmlFor="subject">Subject Area*</label>
           <select className={styles.subjects} onChange={handleSelect}>
+            <option value="">Select a subject</option>
             <option value="Computer Science">Computer Science</option>
             <option value="Math">Math</option>
           </select>
