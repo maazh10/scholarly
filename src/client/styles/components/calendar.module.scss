@@ -12,6 +12,45 @@
   flex-direction: column;
   gap: 3rem;
 
+  .event {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.2rem;
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    background-color: white;
+    color: black;
+    font-size: 1rem;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      background-color: $secondary-color;
+      color: white;
+    }
+
+    .deleteBtn {
+      background-color: transparent;
+      color: white;
+      width: 4px;
+      height: 4px;
+      border-radius: 50px;
+      background-image: url("https://img.icons8.com/ios/50/000000/delete-sign.png");
+      background-size: 18px;
+      background-position: center;
+      background-repeat: no-repeat;
+      border: 1px solid black;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        background-color: red;
+      }
+    }
+  }
+
   button {
     background-color: $secondary-button-color;
     color: white;
