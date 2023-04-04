@@ -1,0 +1,78 @@
+version: '3.7'
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    labels: 
+      - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./certs:/etc/nginx/certs 
+      - ./vhost:/etc/nginx/vhost.d 
+      - ./html:/usr/share/nginx/html
+    networks:
+      - frontend-network
+  nginx-proxy-acme:
+    image: nginxproxy/acme-companion
+    container_name: nginx-proxy-acme
+    depends_on:
+      - "nginx-proxy"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./certs:/etc/nginx/certs
+      - ./vhost:/etc/nginx/vhost.d
+      - ./html:/usr/share/nginx/html
+      - ./acme:/etc/acme.sh
+    environment:
+      - DEFAULT_EMAIL=vineshb100@gmail.com
+    networks:
+      - frontend-network    
+  frontend:
+    build: ./src/client
+    container_name: client
+    restart: always
+    expose:
+      - 3000
+    environment:
+      - VIRTUAL_HOST=replace
+      - LETSENCRYPT_HOST=HOST=replace
+    networks:
+      - frontend-network
+  backend:
+    build: ./src/server
+    container_name: server
+    restart: always
+    expose:
+      - 3001
+    environment:
+      - VIRTUAL_HOST=HOST=
+      - LETSENCRYPT_HOST=HOST=
+    networks:
+      - backend-network
+      - frontend-network
+  postgres:
+      image: postgres:13.1
+      healthcheck:
+        test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root" ]
+        timeout: 45s
+        interval: 10s
+        retries: 10
+      restart: always
+      environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+        - APP_DB_USER=docker
+        - APP_DB_PASS=docker
+        - APP_DB_NAME=docker
+      volumes:
+        - ./db:/docker-entrypoint-initdb.d/
+      ports:
+        - 5432:5432
+      networks:
+        - backend-network
+networks:
+  backend-network:
+  frontend-network:
