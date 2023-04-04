@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Head from "next/head";
+import Image from "next/image";
 
 import styles from "../styles/login.module.scss";
 
@@ -125,7 +126,7 @@ export default function Login() {
         theme="colored"
       />
       <div className={styles.container}>
-        <img
+        <Image
           src="/logo-transparent-dark.png"
           alt="Logo"
           className={styles.logo}

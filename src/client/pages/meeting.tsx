@@ -45,6 +45,7 @@ export default function Meeting({ appointment, user, peer, session }) {
         callInstance.current = call;
       });
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const call = (remotePeerId) => {

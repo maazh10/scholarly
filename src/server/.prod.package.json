@@ -4,15 +4,9 @@
   "description": "### Project Title: Scholarly",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
-    "dev:server": "nodemon src/server/index.ts",
-    "dev:client": "cd src/client && next dev",
-    "start": "concurrently \"npm run start:server\" \"npm run start:client\"",
-    "start:server": "ts-node src/server/index.ts",
-    "start:client": "cd src/client && next start",
-    "build": "concurrently \"npm run build:server\" \"npm run build:client\"",
-    "build:server": "ts-node src/server/index.ts",
-    "build:client": "cd src/client && next build"
+    "dev:server": "nodemon /usr/src/app/index.ts",
+    "start:server": "ts-node /usr/src/app/index.ts",
+    "build:server": "ts-node /usr/src/app/index.ts"
   },
   "repository": {
     "type": "git",

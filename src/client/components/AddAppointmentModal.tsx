@@ -8,6 +8,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "../styles/components/add-appt.module.scss";
 
+import Image from "next/image";
+
 export default function AddAppointmentModal({ isOpen, onClose, onApptAdded }) {
   const [subject, setSubject] = useState("");
   const [tutors, setTutors] = useState([]);
@@ -98,7 +100,7 @@ export default function AddAppointmentModal({ isOpen, onClose, onApptAdded }) {
                   >
                     <div className={styles.tutorInfo}>
                       <div className={styles.tutorTitle}>
-                        <img
+                        <Image
                           className={styles.tutorImg}
                           src="user.png"
                           alt="tutor"

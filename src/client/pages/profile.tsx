@@ -3,8 +3,12 @@ import Loading from "../components/Loading";
 import apiService from "../services/apiService";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import styles from "../styles/profile.module.scss";
+
+import Image from "next/image";
 
 export default function Profile() {
   const [user, setUser] = React.useState<any>(null);
@@ -22,6 +26,20 @@ export default function Profile() {
 
   const handleSaveProfile = async () => {
     try {
+      const pattern = new RegExp(/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/);
+      if (!pattern.test(profile.phone)) {
+        toast.warn("Invalid phone number.", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        return;
+      }
       await apiService.put("/users/me", {
         phoneNumber: profile.phone,
         email: profile.email,
@@ -50,6 +68,7 @@ export default function Profile() {
 
   useEffect(() => {
     checkAuth();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -57,12 +76,24 @@ export default function Profile() {
       <Head>
         <title>Profile</title>
       </Head>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       {!user && <Loading />}
       {user && (
         <>
           <div className={styles.profile}>
             <div className={styles.header}>
-              <img
+              <Image
                 className={styles.profilePic}
                 src="/user.png"
                 alt="Profile Picture"
