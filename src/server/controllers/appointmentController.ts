@@ -7,8 +7,6 @@ import { Student } from "../models/student";
 import { Op } from "sequelize";
 import moment from "moment";
 import twilio from "twilio";
-import dotenv from "dotenv";
-dotenv.config();
 
 interface UserSession extends Session {
     user?: {
