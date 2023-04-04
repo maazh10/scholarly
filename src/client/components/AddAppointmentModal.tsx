@@ -102,6 +102,8 @@ export default function AddAppointmentModal({ isOpen, onClose, onApptAdded }) {
                       <div className={styles.tutorTitle}>
                         <Image
                           className={styles.tutorImg}
+                          width={100}
+                          height={100}
                           src="user.png"
                           alt="tutor"
                         />

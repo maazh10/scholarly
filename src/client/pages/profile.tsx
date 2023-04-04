@@ -96,6 +96,8 @@ export default function Profile() {
               <Image
                 className={styles.profilePic}
                 src="/user.png"
+                width={100}
+                height={100}
                 alt="Profile Picture"
               />
               <div className={styles.name}>
