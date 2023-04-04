@@ -13,6 +13,7 @@ const subscribe = async (req: Request, res: Response) => {
   //pass the object into sendNotification fucntion and catch any error
   webpush.sendNotification(subscription, payload).catch(err=> console.error(err));
 };
+
 export const notificationController = {
   subscribe
 };

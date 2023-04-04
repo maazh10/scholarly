@@ -6,16 +6,12 @@ dotenv.config();
 import { sequelize } from "./datasource";
 import session from 'express-session';
 import cors from "cors"
+
 import { userRouter } from "./routers/userRouter";
 import { appointmentRouter } from "./routers/appointmentRouter";
 import { sessionRouter } from "./routers/sessionRouter";
 import { mailRouter } from "./routers/mailRouter";
 import { notificationRouter } from "./routers/notificationRouter";
-
-const publicVapidKey = 'BDa1ktPguoTlQ7TfVc0qqcsGb_GUJ8vXVaq_xOomHqz9zWnptKN0wSA0-lNOpQT53FHygXBXJpCLQZThbPRFE6o';
-const privateVapidKey = '-hP1DcPrr19YYU467A0xNX45cyAbkD5Rn_ttHUbY6CE';
-//setting vapid keys details
-webpush.setVapidDetails('mailto:mercymeave@section.com', publicVapidKey,privateVapidKey);
 
 export const app = express();
 app.use(bodyParser.json());
@@ -41,6 +37,8 @@ app.use("/api/users", userRouter);
 app.use("/api/appointments", appointmentRouter);
 app.use("/api/sessions", sessionRouter);
 app.use("/api/mail", mailRouter);
+
+app
 
 webpush.setVapidDetails(
   `mailto:${process.env.VAPID_SENDTO}`,
