@@ -55,7 +55,6 @@ const createAppointment = async (req: Request & { session: UserSession }, res: R
     const start = new Date(req.body.startTime);
     const end = new Date(req.body.endTime);
     const appointmentConfirmation = await confirmAppointment(user.phoneNumber);
-    console.log(appointmentConfirmation);
     if (!appointmentConfirmation) {
       res.status(400).json({ message: "Appointment not confirmed" });
       return;

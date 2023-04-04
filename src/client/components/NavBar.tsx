@@ -63,28 +63,38 @@ const NavBar: React.FC = () => {
         </a>
       )}
       {user && (
-        <div ref={ref} className={styles.profileDropdown}>
-          <img
-            src={user.picture != null ? user.picture : "/user.png"}
-            alt="Profile"
-            className={styles.profilePic}
-            onMouseOver={() => setShowDropdown(true)}
-            onClick={() => setShowDropdown(true)}
-          />
-          {showDropdown && (
-            <ul
-              className={styles.pfpDropdownMenu}
-              onMouseEnter={() => setShowDropdown(true)}
-            >
-              <a href="/profile">
-                <li>Profile</li>
-              </a>
-              <a onClick={handleLogout}>
-                <li>Logout</li>
-              </a>
-            </ul>
-          )}
-        </div>
+        <>
+          <button
+            className={styles.donateBtn}
+            onClick={() =>
+              (window.location.href = process.env.NEXT_PUBLIC_STRIPE_DONATE_URL)
+            }
+          >
+            Donate
+          </button>
+          <div ref={ref} className={styles.profileDropdown}>
+            <img
+              src={user.picture != null ? user.picture : "/user.png"}
+              alt="Profile"
+              className={styles.profilePic}
+              onMouseOver={() => setShowDropdown(true)}
+              onClick={() => setShowDropdown(true)}
+            />
+            {showDropdown && (
+              <ul
+                className={styles.pfpDropdownMenu}
+                onMouseEnter={() => setShowDropdown(true)}
+              >
+                <a href="/profile">
+                  <li>Profile</li>
+                </a>
+                <a onClick={handleLogout}>
+                  <li>Logout</li>
+                </a>
+              </ul>
+            )}
+          </div>
+        </>
       )}
     </nav>
   );
