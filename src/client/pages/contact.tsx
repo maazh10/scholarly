@@ -8,7 +8,7 @@ import styles from "../styles/contact.module.scss";
 
 const onSubmit = async (name: string, email: string, message: string) => {
   try {
-    const res = await apiService.post("/mail", {
+    await apiService.post("/mail", {
       name,
       email,
       message,

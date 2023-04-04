@@ -221,6 +221,8 @@ export default function Login() {
                     <option value="Physics">Physics</option>
                     <option value="Chemistry">Chemistry</option>
                     <option value="Biology">Biology</option>
+                    <option value="English">English</option>
+                    <option value="History">History</option>
                   </select>
 
                   <label htmlFor="rate">Rate (Hourly in CAD)</label>

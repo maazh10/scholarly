@@ -75,40 +75,49 @@ export default function AddAppointmentModal({ isOpen, onClose, onApptAdded }) {
             <option value="">Select a subject</option>
             <option value="Computer Science">Computer Science</option>
             <option value="Math">Math</option>
+            <option value="Physics">Physics</option>
+            <option value="Chemistry">Chemistry</option>
+            <option value="Biology">Biology</option>
+            <option value="English">English</option>
+            <option value="History">History</option>
           </select>
         </div>
         {subject && (
           <>
             <div className={styles.tutors}>
-              {tutors.map((tutor) => (
-                <div
-                  className={
-                    selectedTutor?.id === tutor.id
-                      ? selectedTutorClass
-                      : styles.tutorCard
-                  }
-                  onClick={(e) => handleTutorSelect(e, tutor.id)}
-                  key={tutor.id}
-                >
-                  <div className={styles.tutorInfo}>
-                    <div className={styles.tutorTitle}>
-                      <img
-                        className={styles.tutorImg}
-                        src="user.png"
-                        alt="tutor"
-                      />
-                      <h3 className={styles.tutorName}>
-                        {tutor.User.firstName + " " + tutor.User.lastName}
-                      </h3>
+              {tutors.length > 0 ? (
+                tutors.map((tutor) => (
+                  <div
+                    className={
+                      selectedTutor?.id === tutor.id
+                        ? selectedTutorClass
+                        : styles.tutorCard
+                    }
+                    onClick={(e) => handleTutorSelect(e, tutor.id)}
+                    key={tutor.id}
+                  >
+                    <div className={styles.tutorInfo}>
+                      <div className={styles.tutorTitle}>
+                        <img
+                          className={styles.tutorImg}
+                          src="user.png"
+                          alt="tutor"
+                        />
+                        <h3 className={styles.tutorName}>
+                          {tutor.User.firstName + " " + tutor.User.lastName}
+                        </h3>
+                      </div>
+                      <p className={styles.tutorBio}>{tutor.User.bio}</p>
+                      <p>
+                        Specialities:{" "}
+                        {tutor.specialities.map((s) => s).join(", ")}
+                      </p>
                     </div>
-                    <p className={styles.tutorBio}>{tutor.User.bio}</p>
-                    <p>
-                      Specialities:{" "}
-                      {tutor.specialities.map((s) => s).join(", ")}
-                    </p>
                   </div>
-                </div>
-              ))}
+                ))
+              ) : (
+                <p>No tutors found for this subject as yet. Check back soon!</p>
+              )}
             </div>
             <div className={styles.dates}>
               <div className={styles.date}>
