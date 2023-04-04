@@ -22,7 +22,7 @@ Scholarly is a live tutoring application designed for school and university stud
 
 - SendGrid for email confirmations. (1)
 - ThreeJS for landing page background. (2)
-- Stripe for payment integration. (2)
+- Twilio for sms confirmation texts. (1)
 - PushAPI for push notifications. (3)
 - PeerJS for video chat integration. (1)
 - React-fullcalendar for appointement scheduling.
@@ -58,5 +58,4 @@ https://www.youtube.com/watch?v=uDhcZRriKeQ
 - Add UI for profile, contact us and about us.
 - Polish UI.
 - Update home page with three js.
-- Integration with payment processing for premium content.
 - Deploy the application.
