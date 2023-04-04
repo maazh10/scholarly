@@ -49,7 +49,7 @@ export default function Dashboard() {
   return (
     <>
       <Head>
-        <title>Contact Us</title>
+        <title>Dashboard</title>
       </Head>
       <div>
         {loading ? (

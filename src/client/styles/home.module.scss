@@ -10,9 +10,9 @@
   .container {
     height: 100vh;
     scroll-snap-align: center;
-    width: 1400px;
+    width: 90vw;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
   }
 
   .left {
@@ -27,6 +27,7 @@
     margin: 0;
     font-size: 74px;
     color: white;
+    width: 500px;
 
     span {
       color: $secondary-color;

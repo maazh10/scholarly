@@ -1,9 +1,14 @@
 import React from "react";
+import Head from "next/head";
+
 import styles from "../styles/about.module.scss";
 
 export default function About() {
   return (
     <div className={styles.page}>
+      <Head>
+        <title>About</title>
+      </Head>
       <h2 className={styles.primaryheading}>About</h2>
       <h3 className={styles.primarysubheading}>
         Welcome to Scholarly! We are a tutoring app designed to provide students
