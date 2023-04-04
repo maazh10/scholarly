@@ -8,6 +8,7 @@ const AppointmentCard = ({
   subject,
   tutor,
   tutee,
+  date,
   start,
   end,
   notes,
@@ -29,6 +30,9 @@ const AppointmentCard = ({
         </p>
         <p>
           <strong>Tutee:</strong> {tutee}
+        </p>
+        <p>
+          <strong>Date:</strong> {date}
         </p>
         <p>
           <strong>Start Time:</strong> {start}

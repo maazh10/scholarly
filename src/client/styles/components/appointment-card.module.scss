@@ -2,7 +2,7 @@
 
 .card {
   width: 300px;
-  background-color: rgb(226, 246, 252);
+  background-color: #dc9dcd;
   border: 1px solid $secondary-color;
   border-radius: 20px;
   padding: 10px;
@@ -45,7 +45,6 @@
       cursor: pointer;
       width: 100px;
       height: 30px;
-      border: none;
       border-radius: 5px;
       background-color: white;
       border: 1px solid green;

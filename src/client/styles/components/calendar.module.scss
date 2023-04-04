@@ -13,12 +13,11 @@
   gap: 3rem;
 
   button {
-    background-color: $button-color;
+    background-color: $secondary-button-color;
     color: white;
     padding: 1rem;
     border: 1px solid black;
     border-radius: 0.5rem;
-    font-size: 1rem;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     font-size: 20px;
