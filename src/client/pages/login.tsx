@@ -129,6 +129,9 @@ export default function Login() {
         <Image
           src="/logo-transparent-dark.png"
           alt="Logo"
+          width={100}
+          height={100}
+          priority={true}
           className={styles.logo}
         />
         <h1>{isSignUp ? "Sign Up" : "Log In"}</h1>

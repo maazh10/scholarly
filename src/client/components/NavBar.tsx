@@ -49,7 +49,7 @@ const NavBar: React.FC = () => {
     <nav className={styles.navbar}>
       <div className={styles.logo}>
         <Link href="/">
-          <Image src="/logo-transparent.png" alt="Logo" />
+          <Image src="/logo-transparent.png" alt="Logo" width={100} height={100}/>
         </Link>
       </div>
       <div className={styles.navbarLinks}>
