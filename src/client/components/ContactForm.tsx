@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import styles from "../styles/components/contact-form.module.scss";
+import { validate } from "../utils/validate";
+import { toast } from "react-toastify";
 
 interface ContactFormProps {
   onSubmit: (name: string, email: string, message: string) => void;
@@ -15,6 +17,16 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
     setName("");
     setEmail("");
     setMessage("");
+    const values = {
+      name,
+      email,
+      message,
+    };
+    const errors = validate(values);
+    if (errors && Object.keys(errors).length > 0) {
+      toast.error("Wrong email format!");
+      return;
+    }
     onSubmit(name, email, message);
   };
 
@@ -25,6 +37,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
         <input
           type="text"
           value={name}
+          required
           onChange={(e) => setName(e.target.value)}
         />
       </label>
@@ -33,6 +46,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
         <input
           type="email"
           value={email}
+          required
           onChange={(e) => setEmail(e.target.value)}
         />
       </label>
@@ -40,6 +54,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
         Message:
         <textarea
           value={message}
+          required
           onChange={(e) => setMessage(e.target.value)}
         />
       </label>
