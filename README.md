@@ -25,11 +25,11 @@ Scholarly is a live tutoring application designed for school and university stud
 - Twilio for sms confirmation texts. (1)
 - Stripe for payment for appointments. (2)
 - PeerJS for video chat integration. (1)
-- React-fullcalendar for appointement scheduling.
+- mozilla/pdf.js for natively viewing PDFs on the webpage. (2)
 
 # (optional) What complexity points will be attempted as bonus for the challenge factor
 
-- mozilla/pdf.js for natively viewing PDFs on the webpage. (2)
+- React-fullcalendar for appointement scheduling.
 
 # Video Demo
 You can find a link to our project demo here:
