@@ -56,6 +56,7 @@ const NavBar: React.FC = () => {
         )}
         <a href="/about">About Us</a>
         <a href="/contact">Contact Us</a>
+        {user && <a href="/pdf">PDF Viewer</a>}
       </div>
       {!user && (
         <a className={styles.loginBtn} href="/login">
