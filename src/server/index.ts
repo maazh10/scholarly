@@ -15,10 +15,30 @@ import { mailRouter } from "./routers/mailRouter";
 export const app = express();
 app.use(bodyParser.json());
 
-app.use(cors({
-  origin: 'http://localhost:3000',
-  credentials: true
-}));
+const whiteList = ['http://localhost:3000', process.env.PROD_FRONTEND_URL, process.env.PROD_BACKEND_URL, "https://api.scholarly-c09.tech"]
+var corsOptionsDelegate = function (req, callback) {
+	  var corsOptions;
+	    if (whiteList.indexOf(req.header('Origin')) !== -1) {
+		        corsOptions = { origin: true, credentials:true } // reflect (enable) the requested origin in the CORS response
+	    } else {
+		corsOptions = { origin: false } // disable CORS for this request
+		}
+		callback(null, corsOptions) // callback expects two parameters: error and options
+	}
+const corsOptions = {
+origin: (origin, callback) => {
+	if (whiteList.indexOf(origin) !== -1) {
+		callback(null, true)
+	} else {
+		console.log(origin);
+		callback(new Error(`Origin not in list, ${origin}`))
+	}
+},
+credentials: true
+}
+app.use(cors(corsOptionsDelegate));
+
+app.use(cors({origin: true, credentials: true}));
 
 (async () => {
   await sequelize.sync({ alter: { drop: false } });
