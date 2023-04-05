@@ -13,3 +13,4 @@ userRouter.get("/tutors/:id", isAuthenticated, userController.getTutor);
 userRouter.get("/students", isAuthenticated, userController.getStudents);
 userRouter.get("/tutors", isAuthenticated, userController.getTutors);
 userRouter.get("/", isAuthenticated, userController.getUsers);
+userRouter.put("/me", isAuthenticated, userController.updateUser);

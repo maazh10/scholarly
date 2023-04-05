@@ -6,12 +6,38 @@ import { Tutor } from "../models/tutor";
 import { Student } from "../models/student";
 import { Op } from "sequelize";
 import moment from "moment";
+import twilio from "twilio";
+import dotenv from "dotenv";
+dotenv.config();
 
 interface UserSession extends Session {
     user?: {
       id: number;
     };
 }
+
+const confirmAppointment = async (phoneNumber: string): Promise<boolean> => {
+    const accountSid = process.env.TWILIO_ACCOUNT_SID;
+    const authToken = process.env.TWILIO_AUTH_TOKEN;
+    const twilioNumber = process.env.TWILIO_PHONE_NUMBER;
+    const client = twilio(accountSid, authToken);
+    const formattedNumber = "+1" + phoneNumber.replace("/-/g", "");
+    await client.messages.create({
+      body: "Reply with 'yes' to confirm your appointment, you have 10 seconds to respond.",
+      from: twilioNumber,
+      to: formattedNumber,
+    });
+    const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    const curtime = new Date();
+    await sleep(15000);
+    const messages = await client.messages.list({ limit: 20, from: formattedNumber, dateSentAfter: curtime });
+    const message = messages.find(message => message.body === "yes");
+    if (message) {
+      return true;
+    }
+    return false;
+};
+
 
 const createAppointment = async (req: Request & { session: UserSession }, res: Response) => {
     const user = await User.findByPk(req.session.user.id);
@@ -28,6 +54,11 @@ const createAppointment = async (req: Request & { session: UserSession }, res: R
     }
     const start = new Date(req.body.startTime);
     const end = new Date(req.body.endTime);
+    const appointmentConfirmation = await confirmAppointment(user.phoneNumber);
+    if (!appointmentConfirmation) {
+      res.status(400).json({ message: "Appointment not confirmed" });
+      return;
+    }
     const appointment = await Appointment.create({
         TutorId: req.body.tutorId,
         StudentId: student.id,

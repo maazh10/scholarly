@@ -1,15 +1,26 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import apiService from "@/services/apiService";
 import Loading from "@/components/Loading";
+import Head from "next/head";
 
 import styles from "../styles/meeting.module.scss";
 
 export default function Meeting({ appointment, user, peer, session }) {
+  const [showButton, setShowButton] = useState(false);
+
   const remoteVideoRef = useRef(null);
   const currentUserVideoRef = useRef(null);
   const callInstance = useRef(null);
   const router = useRouter();
+
+  const handleMouseEnter = () => {
+    setShowButton(true);
+  };
+
+  const handleMouseLeave = () => {
+    setShowButton(false);
+  };
 
   useEffect(() => {
     if (!user) router.push("/login");
@@ -20,42 +31,45 @@ export default function Meeting({ appointment, user, peer, session }) {
 
     peer.on("call", (call) => {
       const getUserMedia = navigator.mediaDevices.getUserMedia;
-      getUserMedia({ video: true, audio: false }).then((mediaStream) => {
-        getUserMedia({ video: true, audio: false }).then((myVideo) => {
-          currentUserVideoRef.current.srcObject = myVideo;
-          currentUserVideoRef.current.play();
-          call.answer(mediaStream);
-          call.on("stream", function (remoteStream) {
-            remoteVideoRef.current.srcObject = remoteStream;
-            remoteVideoRef.current.play();
-          });
-          call.on("close", () => {
-            mediaStream.getTracks().forEach((track) => track.stop());
-            myVideo.getTracks().forEach((track) => track.stop());
-          });
-          callInstance.current = call;
-        });
-      });
-    });
-  }, []);
-
-  const call = (remotePeerId) => {
-    const getUserMedia = navigator.mediaDevices.getUserMedia;
-    getUserMedia({ video: true, audio: false }).then((mediaStream) => {
-      getUserMedia({ video: true, audio: false }).then((myVideo) => {
-        currentUserVideoRef.current.srcObject = myVideo;
+      getUserMedia({ video: true, audio: true }).then((mediaStream) => {
+        currentUserVideoRef.current.srcObject = mediaStream;
         currentUserVideoRef.current.play();
-        const call = peer.call(remotePeerId, mediaStream);
-        call.on("stream", (remoteStream) => {
+        call.answer(mediaStream);
+        call.on("stream", function (remoteStream) {
           remoteVideoRef.current.srcObject = remoteStream;
           remoteVideoRef.current.play();
         });
         call.on("close", () => {
           mediaStream.getTracks().forEach((track) => track.stop());
-          myVideo.getTracks().forEach((track) => track.stop());
         });
         callInstance.current = call;
       });
+    });
+
+    const handleMouseMove = () => {
+      setShowButton(true);
+      setTimeout(() => setShowButton(false), 2000); 
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
+
+  const call = (remotePeerId) => {
+    const getUserMedia = navigator.mediaDevices.getUserMedia;
+    getUserMedia({ video: true, audio: true }).then((mediaStream) => {
+      currentUserVideoRef.current.srcObject = mediaStream;
+      currentUserVideoRef.current.play();
+      const call = peer.call(remotePeerId, mediaStream);
+      call.on("stream", (remoteStream) => {
+        remoteVideoRef.current.srcObject = remoteStream;
+        remoteVideoRef.current.play();
+      });
+      call.on("close", () => {
+        mediaStream.getTracks().forEach((track) => track.stop());
+      });
+      callInstance.current = call;
     });
   };
 
@@ -70,16 +84,17 @@ export default function Meeting({ appointment, user, peer, session }) {
     <>
       {appointment ? (
         <div className={styles.page}>
-          <div className={styles.videos}>
-            <div className={styles.video}>
-              <video ref={currentUserVideoRef} />
-              <p>My Video</p>
-            </div>
-            <div className={styles.video}>
-              <video ref={remoteVideoRef} />
-              <p>Remote Video</p>
-            </div>
-            <button onClick={handleDisconnect}>End Call</button>
+          <Head>
+            <title>Meeting</title>
+          </Head>
+          <div className={styles.videos} onMouseEnter={handleMouseEnter}>
+            <video className={styles.video1} ref={remoteVideoRef} />
+            <video className={styles.video2} ref={currentUserVideoRef} muted />
+            {showButton && (
+              <div onMouseLeave={handleMouseLeave} className={styles.btns}>
+                <button onClick={handleDisconnect}></button>
+              </div>
+            )}
           </div>
         </div>
       ) : (

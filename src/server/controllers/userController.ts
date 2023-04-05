@@ -176,6 +176,58 @@ const getTutors = async (req: Request & { session: UserSession }, res: Response)
   res.json({ tutors: tutors });
 };
 
+const updateUser = async (req: Request & { session: UserSession }, res: Response) => {
+  const user = await User.findOne({ where: { id: req.session.user.id } });
+  if (!user) {
+    res.status(404).json({ error: "User not found" });
+    return;
+  }
+  if (req.body.firstName) {
+    user.firstName = req.body.firstName;
+  }
+  if (req.body.lastName) {
+    user.lastName = req.body.lastName;
+  }
+  if (req.body.email) {
+    user.email = req.body.email;
+  }
+  if (req.body.bio) {
+    user.bio = req.body.bio;
+  }
+  if (req.body.phoneNumber) {
+    user.phoneNumber = req.body.phoneNumber;
+  }
+  if (req.body.school) {
+    const student = await Student.findOne({ where: { UserId: user.id } });
+    if (!student) {
+      res.status(404).json({ error: "Student not found" });
+      return;
+    }
+    student.school = req.body.school;
+    await student.save();
+  }
+  if (req.body.specialities) {
+    const tutor = await Tutor.findOne({ where: { UserId: user.id } });
+    if (!tutor) {
+      res.status(404).json({ error: "Tutor not found" });
+      return;
+    }
+    tutor.specialities = req.body.specialities;
+    await tutor.save();
+  }
+  if (req.body.rate) {
+    const tutor = await Tutor.findOne({ where: { UserId: user.id } });
+    if (!tutor) {
+      res.status(404).json({ error: "Tutor not found" });
+      return;
+    }
+    tutor.rate = req.body.rate;
+    await tutor.save();
+  }
+  await user.save();
+  res.status(200).json({ success: true });
+};
+
 export const userController = {
   signup,
   login,
@@ -186,4 +238,5 @@ export const userController = {
   getTutor,
   getStudents,
   getTutors,
+  updateUser,
 };
