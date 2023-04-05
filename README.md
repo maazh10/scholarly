@@ -22,16 +22,14 @@ Scholarly is a live tutoring application designed for school and university stud
 
 - SendGrid for email confirmations. (1)
 - ThreeJS for landing page background. (2)
-- Stripe for payment integration. (2)
-- PushAPI for push notifications. (3)
+- Twilio for sms confirmation texts. (1)
+- Stripe for payment for appointments. (2)
 - PeerJS for video chat integration. (1)
-- React-fullcalendar for appointement scheduling.
+- mozilla/pdf.js for natively viewing PDFs on the webpage. (2)
 
 # (optional) What complexity points will be attempted as bonus for the challenge factor
 
-- mozilla/pdf.js for natively viewing PDFs on the webpage. (2)
-- OpenAI possibly for search queries. (1)
-- Univos data visulization for some sort of analytics (1)
+- React-fullcalendar for appointement scheduling.
 
 # Video Demo
 You can find a link to our project demo here:
@@ -58,5 +56,4 @@ https://www.youtube.com/watch?v=uDhcZRriKeQ
 - Add UI for profile, contact us and about us.
 - Polish UI.
 - Update home page with three js.
-- Integration with payment processing for premium content.
 - Deploy the application.
