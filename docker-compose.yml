@@ -37,8 +37,8 @@ services:
     expose:
       - 3000
     environment:
-      - VIRTUAL_HOST=replace
-      - LETSENCRYPT_HOST=HOST=replace
+      - VIRTUAL_HOST=scholarly-c09.tech
+      - LETSENCRYPT_HOST=scholarly-c09.tech
     networks:
       - frontend-network
   backend:
@@ -48,8 +48,8 @@ services:
     expose:
       - 3001
     environment:
-      - VIRTUAL_HOST=HOST=
-      - LETSENCRYPT_HOST=HOST=
+      - VIRTUAL_HOST=api.scholarly-c09.tech
+      - LETSENCRYPT_HOST=api.scholarly-c09.tech
     networks:
       - backend-network
       - frontend-network
@@ -57,7 +57,7 @@ services:
       image: postgres:13.1
       user: postgres
       healthcheck:
-        test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root" ]
+        test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "postgres" ]
         timeout: 45s
         interval: 10s
         retries: 10
@@ -65,9 +65,9 @@ services:
       environment:
         - POSTGRES_USER=postgres
         - POSTGRES_PASSWORD=postgres
-        - APP_DB_USER=root
-        - APP_DB_PASS=root
-        - APP_DB_NAME=root
+        - APP_DB_USER=postgres
+        - APP_DB_PASS=postgres
+        - APP_DB_NAME=postgres
       volumes:
         - ./db:/docker-entrypoint-initdb.d/
       ports:
