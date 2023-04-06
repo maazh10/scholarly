@@ -29,6 +29,7 @@ const corsOptionsDelegate = function (
   ) => void
 ): void {
   var corsOptions: { origin: boolean; credentials?: boolean };
+  console.log(req.header("Origin"));
   if (whiteList.indexOf(req.header("Origin")) !== -1) {
     corsOptions = { origin: true, credentials: true }; // reflect (enable) the requested origin in the CORS response
   } else {
@@ -36,9 +37,14 @@ const corsOptionsDelegate = function (
   }
   callback(null, corsOptions); // callback expects two parameters: error and options
 };
-app.use(cors(corsOptionsDelegate));
 
-app.use(cors({ origin: true, credentials: true }));
+if (process.env.NODE_ENV === "production") {
+  console.log("Whitelisting");
+  app.use(cors({ origin: true, credentials: true }));
+} else {
+  console.log("Using cors");
+  app.use(cors(corsOptionsDelegate));
+}
 
 (async () => {
   await sequelize.sync({ alter: { drop: false } });
