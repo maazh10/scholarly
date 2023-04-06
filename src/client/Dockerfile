@@ -5,6 +5,7 @@ WORKDIR /usr/src/app
 COPY .prod.package.json ./package.json
 COPY .prod.package-lock.json ./package-lock.json
 
+RUN npm install -D @swc/cli @swc/core
 RUN npm install
 
 COPY . .
