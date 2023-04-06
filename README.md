@@ -7,6 +7,7 @@
 # Depoloyable URL
 
 You can find our project here: https://scholarly-c09.tech/
+
 # Your focus (frontend focused or backend focused)
 
 Frontend focused since we would want to focus more on the user experience and how the content is presented to accomplish a more engaging expeirence for new learners.
