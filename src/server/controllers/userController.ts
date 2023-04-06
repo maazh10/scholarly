@@ -12,8 +12,17 @@ interface UserSession extends Session {
   };
 }
 
-const signup = async (req: Request & { session: UserSession }, res: Response) => {
-  if (!req.body?.email || !req.body?.password || !req.body?.firstName || !req.body?.lastName || !req.body?.userType) {
+const signup = async (
+  req: Request & { session: UserSession },
+  res: Response
+) => {
+  if (
+    !req.body?.email ||
+    !req.body?.password ||
+    !req.body?.firstName ||
+    !req.body?.lastName ||
+    !req.body?.userType
+  ) {
     res.status(400).json({ error: "Missing required params" });
     return;
   }
@@ -27,8 +36,15 @@ const signup = async (req: Request & { session: UserSession }, res: Response) =>
   if (req.body.password.length < 6) {
     res.status(400).json({ error: "Password must be at least 6 characters" });
     return;
-  } else if (!req.body.password.match(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9!@#\$%\^&\*])(?=.{6,})/)) {
-    res.status(400).json({ error: "Password must contain at least one uppercase letter, one lowercase letter and/or one number" });
+  } else if (
+    !req.body.password.match(
+      /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9!@#\$%\^&\*])(?=.{6,})/
+    )
+  ) {
+    res.status(400).json({
+      error:
+        "Password must contain at least one uppercase letter, one lowercase letter and/or one number",
+    });
     return;
   }
 
@@ -46,12 +62,12 @@ const signup = async (req: Request & { session: UserSession }, res: Response) =>
       userType: req.body.userType.toString(),
       password,
     });
-    if (req.body.userType === 'student') {
+    if (req.body.userType === "student") {
       await Student.create({
         UserId: user.dataValues.id,
         school: req.body?.school.toString(),
       });
-    } else if (req.body.userType === 'tutor') {
+    } else if (req.body.userType === "tutor") {
       if (!req.body.specialities || !req.body.rate) {
         res.status(400).json({ error: "Missing required params" });
         return;
@@ -65,14 +81,17 @@ const signup = async (req: Request & { session: UserSession }, res: Response) =>
       res.status(400).json({ error: "Invalid user type" });
       return;
     }
-  } catch(e) {
+  } catch (e) {
     return res.status(422).json({ error: e.message });
   }
   req.session.user = { id: user.id };
   res.status(201).json({ success: true, email: user.email });
 };
 
-const login = async (req: Request & { session: UserSession }, res: Response) => {
+const login = async (
+  req: Request & { session: UserSession },
+  res: Response
+) => {
   if (!req.body?.email || !req.body?.password) {
     res.status(400).json({ error: "Missing required params" });
     return;
@@ -87,11 +106,14 @@ const login = async (req: Request & { session: UserSession }, res: Response) => 
     res.status(401).json({ error: "Incorrect email or password" });
     return;
   }
-  req.session.user = { id: user.id }
+  req.session.user = { id: user.id };
   res.status(200).json({ success: true, user: req.session.user });
-}
+};
 
-const logout = async (req: Request & { session: UserSession }, res: Response) => {
+const logout = async (
+  req: Request & { session: UserSession },
+  res: Response
+) => {
   req.session.destroy((err) => {
     if (err) {
       res.status(500).json({ error: "Failed to logout" });
@@ -101,23 +123,57 @@ const logout = async (req: Request & { session: UserSession }, res: Response) =>
   });
 };
 
-const getUser = async (req: Request & { session: UserSession }, res: Response) => {
-  const user = await User.findOne({ where: { id: req.session.user.id }, include: [{ model: Student }, { model: Tutor }] });
+const getUser = async (
+  req: Request & { session: UserSession },
+  res: Response
+) => {
+  const user = await User.findOne({
+    where: { id: req.session.user.id },
+    include: [{ model: Student }, { model: Tutor }],
+  });
   if (!user) {
     res.status(404).json({ error: "User not found" });
     return;
   }
-  if (user.userType === 'student') {
+  if (user.userType === "student") {
     const student = await Student.findOne({ where: { UserId: user.id } });
-    res.status(200).json({ user: { userId: user.id, studentId: student.id, email: user.email, firstName: user.firstName, lastName: user.lastName, bio: user.bio, phoneNumber: user.phoneNumber, userType: user.userType, school: student?.school } });
-  } else if (user.userType === 'tutor') {
+    res.status(200).json({
+      user: {
+        userId: user.id,
+        studentId: student.id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        bio: user.bio,
+        phoneNumber: user.phoneNumber,
+        userType: user.userType,
+        school: student?.school,
+      },
+    });
+  } else if (user.userType === "tutor") {
     const tutor = await Tutor.findOne({ where: { UserId: user.id } });
-    res.status(200).json({ user: { userId: user.id, tutorId: tutor.id, email: user.email, firstName: user.firstName, lastName: user.lastName, phoneNumber: user.phoneNumber, bio: user.bio, userType: user.userType, specialities: tutor?.specialities, rate: tutor?.rate } });
+    res.status(200).json({
+      user: {
+        userId: user.id,
+        tutorId: tutor.id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        phoneNumber: user.phoneNumber,
+        bio: user.bio,
+        userType: user.userType,
+        specialities: tutor?.specialities,
+        rate: tutor?.rate,
+      },
+    });
     return;
   }
-}
+};
 
-const getUsers = async (req: Request & { session: UserSession }, res: Response) => {
+const getUsers = async (
+  req: Request & { session: UserSession },
+  res: Response
+) => {
   const page = req.query.page ? parseInt(req.query.page.toString()) : 0;
   const limit = req.query.limit ? parseInt(req.query.limit.toString()) : 10;
   const users = await User.findAll({
@@ -127,8 +183,14 @@ const getUsers = async (req: Request & { session: UserSession }, res: Response) 
   res.json({ users: users });
 };
 
-const getStudent = async (req: Request & { session: UserSession }, res: Response) => {
-  const student = await Student.findOne({ where: { UserId: req.params.id }, include: [{ model: User }] });
+const getStudent = async (
+  req: Request & { session: UserSession },
+  res: Response
+) => {
+  const student = await Student.findOne({
+    where: { UserId: req.params.id },
+    include: [{ model: User }],
+  });
   if (!student) {
     res.status(404).json({ error: "Student not found" });
     return;
@@ -136,8 +198,14 @@ const getStudent = async (req: Request & { session: UserSession }, res: Response
   res.status(200).json({ student: student });
 };
 
-const getTutor = async (req: Request & { session: UserSession }, res: Response) => {
-  const tutor = await Tutor.findOne({ where: { UserId: req.params.id }, include: [{ model: User }] });
+const getTutor = async (
+  req: Request & { session: UserSession },
+  res: Response
+) => {
+  const tutor = await Tutor.findOne({
+    where: { UserId: req.params.id },
+    include: [{ model: User }],
+  });
   if (!tutor) {
     res.status(404).json({ error: "Tutor not found" });
     return;
@@ -145,7 +213,10 @@ const getTutor = async (req: Request & { session: UserSession }, res: Response) 
   res.status(200).json({ tutor: tutor });
 };
 
-const getStudents = async (req: Request & { session: UserSession }, res: Response) => {
+const getStudents = async (
+  req: Request & { session: UserSession },
+  res: Response
+) => {
   const page = req.query.page ? parseInt(req.query.page.toString()) : 0;
   const limit = req.query.limit ? parseInt(req.query.limit.toString()) : 10;
   const students = await Student.findAll({
@@ -155,8 +226,11 @@ const getStudents = async (req: Request & { session: UserSession }, res: Respons
   res.json({ students: students });
 };
 
-const getTutors = async (req: Request & { session: UserSession }, res: Response) => {
-  if(!req.query.subject) {
+const getTutors = async (
+  req: Request & { session: UserSession },
+  res: Response
+) => {
+  if (!req.query.subject) {
     res.status(400).json({ error: "Missing subject" });
     return;
   }
@@ -176,7 +250,10 @@ const getTutors = async (req: Request & { session: UserSession }, res: Response)
   res.json({ tutors: tutors });
 };
 
-const updateUser = async (req: Request & { session: UserSession }, res: Response) => {
+const updateUser = async (
+  req: Request & { session: UserSession },
+  res: Response
+) => {
   const user = await User.findOne({ where: { id: req.session.user.id } });
   if (!user) {
     res.status(404).json({ error: "User not found" });

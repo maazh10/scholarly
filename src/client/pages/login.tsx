@@ -205,6 +205,7 @@ export default function Login() {
                     name="phoneNumber"
                     pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                     placeholder="123-456-7890"
+                    required
                   />
                   <label htmlFor="bio">Bio</label>
                   <textarea id="bio" name="bio" />
@@ -261,6 +262,7 @@ export default function Login() {
                     name="phoneNumber"
                     pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                     placeholder="123-456-7890"
+                    required
                   />
                   <label htmlFor="bio">Bio</label>
                   <textarea id="bio" name="bio" />
