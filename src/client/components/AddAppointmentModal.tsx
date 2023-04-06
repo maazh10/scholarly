@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import Modal from "react-modal";
 import Datetime from "react-datetime";

@@ -6,6 +6,7 @@ import Typewriter from "typewriter-effect";
 import Head from "next/head";
 
 import styles from "../styles/home.module.scss";
+import Link from "next/link";
 
 export default function Index() {
   return (
@@ -42,9 +43,9 @@ export default function Index() {
               }}
             />
           </div>
-          <a href="/login">
+          <Link href="/login">
             <button className={styles.button}>Get Started</button>
-          </a>
+          </Link>
         </div>
       </div>
     </div>

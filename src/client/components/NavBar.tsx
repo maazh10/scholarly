@@ -1,7 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useRef, useEffect } from "react";
 import apiService from "../services/apiService";
 import { useRouter } from "next/router";
 import styles from "../styles/components/navbar.module.scss";
+
+import Link from "next/link";
 
 const NavBar: React.FC = () => {
   const [user, setUser] = React.useState<any>(null);
@@ -45,23 +48,23 @@ const NavBar: React.FC = () => {
   return (
     <nav className={styles.navbar}>
       <div className={styles.logo}>
-        <a href="/">
+        <Link href="/">
           <img src="/logo-transparent.png" alt="Logo" />
-        </a>
+        </Link>
       </div>
       <div className={styles.navbarLinks}>
-        {user && <a href="/dashboard">Dashboard</a>}
+        {user && <Link href="/dashboard">Dashboard</Link>}
         {user && user.userType === "student" && (
-          <a href="/schedule">Schedule</a>
+          <Link href="/schedule">Schedule</Link>
         )}
-        {user && <a href="/pdf">PDF Viewer</a>}
-        <a href="/about">About Us</a>
-        <a href="/contact">Contact Us</a>
+        {user && <Link href="/pdf">PDF Viewer</Link>}
+        <Link href="/about">About Us</Link>
+        <Link href="/contact">Contact Us</Link>
       </div>
       {!user && (
-        <a className={styles.loginBtn} href="/login">
+        <Link className={styles.loginBtn} href="/login">
           Login
-        </a>
+        </Link>
       )}
       {user && (
         <>
@@ -86,9 +89,9 @@ const NavBar: React.FC = () => {
                 className={styles.pfpDropdownMenu}
                 onMouseEnter={() => setShowDropdown(true)}
               >
-                <a href="/profile">
+                <Link href="/profile">
                   <li>Profile</li>
-                </a>
+                </Link>
                 <a onClick={handleLogout}>
                   <li>Logout</li>
                 </a>

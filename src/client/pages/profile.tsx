@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
 import Loading from "../components/Loading";
 import apiService from "../services/apiService";
@@ -50,6 +51,7 @@ export default function Profile() {
 
   useEffect(() => {
     checkAuth();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
