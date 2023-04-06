@@ -32,6 +32,7 @@ Scholarly is a live tutoring application designed for school and university stud
 - React-fullcalendar for appointement scheduling.
 
 # Video Demo
+
 You can find a link to our project demo here:
 https://www.youtube.com/watch?v=uDhcZRriKeQ
 

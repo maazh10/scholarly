@@ -48,11 +48,11 @@ export default function Meeting({ appointment, user, peer, session }) {
 
     const handleMouseMove = () => {
       setShowButton(true);
-      setTimeout(() => setShowButton(false), 4000); 
+      setTimeout(() => setShowButton(false), 4000);
     };
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove);
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
 

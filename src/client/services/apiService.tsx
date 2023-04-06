@@ -1,6 +1,9 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 
-const API_URL = process.env.PROD_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
+const API_URL =
+  process.env.PROD_BACKEND_URL ||
+  process.env.NEXT_PUBLIC_API_URL ||
+  "http://localhost:3001/api";
 
 class ApiService {
   private readonly instance: AxiosInstance;

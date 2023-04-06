@@ -7,8 +7,28 @@ dotenv.config();
 
 export const appointmentRouter = Router();
 
-appointmentRouter.post("/", isAuthenticated, appointmentController.createAppointment);
-appointmentRouter.get("/", isAuthenticated, appointmentController.getAppointments);
-appointmentRouter.get("/:id", isAuthenticated, appointmentController.getAppointment);
-appointmentRouter.put("/:id", isAuthenticated, appointmentController.updateAppointment);
-appointmentRouter.delete("/:id", isAuthenticated, appointmentController.deleteAppointment);
+appointmentRouter.post(
+  "/",
+  isAuthenticated,
+  appointmentController.createAppointment
+);
+appointmentRouter.get(
+  "/",
+  isAuthenticated,
+  appointmentController.getAppointments
+);
+appointmentRouter.get(
+  "/:id",
+  isAuthenticated,
+  appointmentController.getAppointment
+);
+appointmentRouter.put(
+  "/:id",
+  isAuthenticated,
+  appointmentController.updateAppointment
+);
+appointmentRouter.delete(
+  "/:id",
+  isAuthenticated,
+  appointmentController.deleteAppointment
+);

@@ -3,23 +3,23 @@ import { sequelize } from "../datasource";
 import { User } from "./user";
 
 interface StudentAttributes {
-    id?: number;
-    UserId?: number;
-    school?: string;
+  id?: number;
+  UserId?: number;
+  school?: string;
 }
 
 class Student extends Model<StudentAttributes> implements StudentAttributes {
-    public id!: number;
-    public UserId!: number;
-    public school!: string;
+  public id!: number;
+  public UserId!: number;
+  public school!: string;
 }
 
 Student.init(
   {
     school: {
-        type: DataTypes.STRING,
-        allowNull: false
-    }
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   },
   {
     tableName: "students",

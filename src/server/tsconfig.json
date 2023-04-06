@@ -6,6 +6,6 @@
     "sourceMap": true,
     "outDir": "./server/dist",
     "strict": false,
-    "allowJs": true,
+    "allowJs": true
   }
 }

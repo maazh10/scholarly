@@ -1,8 +1,8 @@
-version: '3.7'
+version: "3.7"
 services:
   nginx-proxy:
     image: jwilder/nginx-proxy
-    labels: 
+    labels:
       - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
     container_name: nginx-proxy
     ports:
@@ -10,8 +10,8 @@ services:
       - "443:443"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - ./certs:/etc/nginx/certs 
-      - ./vhost:/etc/nginx/vhost.d 
+      - ./certs:/etc/nginx/certs
+      - ./vhost:/etc/nginx/vhost.d
       - ./html:/usr/share/nginx/html
     networks:
       - frontend-network
@@ -29,7 +29,7 @@ services:
     environment:
       - DEFAULT_EMAIL=vineshb100@gmail.com
     networks:
-      - frontend-network    
+      - frontend-network
   frontend:
     build: ./src/client
     container_name: client
@@ -54,26 +54,26 @@ services:
       - backend-network
       - frontend-network
   postgres:
-      image: postgres:13.1
-      user: postgres
-      healthcheck:
-        test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "postgres" ]
-        timeout: 45s
-        interval: 10s
-        retries: 10
-      restart: always
-      environment:
-        - POSTGRES_USER=postgres
-        - POSTGRES_PASSWORD=postgres
-        - APP_DB_USER=postgres
-        - APP_DB_PASS=postgres
-        - APP_DB_NAME=postgres
-      volumes:
-        - ./db:/docker-entrypoint-initdb.d/
-      ports:
-        - 5432:5432
-      networks:
-        - backend-network
+    image: postgres:13.1
+    user: postgres
+    healthcheck:
+      test: ["CMD", "pg_isready", "-q", "-d", "postgres", "-U", "postgres"]
+      timeout: 45s
+      interval: 10s
+      retries: 10
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - APP_DB_USER=postgres
+      - APP_DB_PASS=postgres
+      - APP_DB_NAME=postgres
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/
+    ports:
+      - 5432:5432
+    networks:
+      - backend-network
 networks:
   backend-network:
   frontend-network:
