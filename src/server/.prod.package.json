@@ -6,7 +6,7 @@
   "scripts": {
     "dev:server": "nodemon src/server/index.ts",
     "start:server": "ts-node src/server/index.ts",
-    "build:server": "ts-node src/server/index.ts",
+    "build:server": "ts-node src/server/index.ts"
   },
   "repository": {
     "type": "git",
