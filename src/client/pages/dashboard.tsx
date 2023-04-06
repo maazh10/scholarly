@@ -60,6 +60,7 @@ export default function Dashboard() {
       .then((data) => {
         setPastAppts((data as { appointments: any[] }).appointments);
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
