@@ -41,12 +41,10 @@ const signup = async (
       /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9!@#\$%\^&\*])(?=.{6,})/
     )
   ) {
-    res
-      .status(400)
-      .json({
-        error:
-          "Password must contain at least one uppercase letter, one lowercase letter and/or one number",
-      });
+    res.status(400).json({
+      error:
+        "Password must contain at least one uppercase letter, one lowercase letter and/or one number",
+    });
     return;
   }
 
@@ -139,39 +137,35 @@ const getUser = async (
   }
   if (user.userType === "student") {
     const student = await Student.findOne({ where: { UserId: user.id } });
-    res
-      .status(200)
-      .json({
-        user: {
-          userId: user.id,
-          studentId: student.id,
-          email: user.email,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          bio: user.bio,
-          phoneNumber: user.phoneNumber,
-          userType: user.userType,
-          school: student?.school,
-        },
-      });
+    res.status(200).json({
+      user: {
+        userId: user.id,
+        studentId: student.id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        bio: user.bio,
+        phoneNumber: user.phoneNumber,
+        userType: user.userType,
+        school: student?.school,
+      },
+    });
   } else if (user.userType === "tutor") {
     const tutor = await Tutor.findOne({ where: { UserId: user.id } });
-    res
-      .status(200)
-      .json({
-        user: {
-          userId: user.id,
-          tutorId: tutor.id,
-          email: user.email,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          phoneNumber: user.phoneNumber,
-          bio: user.bio,
-          userType: user.userType,
-          specialities: tutor?.specialities,
-          rate: tutor?.rate,
-        },
-      });
+    res.status(200).json({
+      user: {
+        userId: user.id,
+        tutorId: tutor.id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        phoneNumber: user.phoneNumber,
+        bio: user.bio,
+        userType: user.userType,
+        specialities: tutor?.specialities,
+        rate: tutor?.rate,
+      },
+    });
     return;
   }
 };

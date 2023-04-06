@@ -22,12 +22,10 @@ const send = async (req: Request, res: Response) => {
       .status(200)
       .json({ success: true, message: "Your message was sent successfully." });
   } catch (err) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: `There was an error sending your message. ${err}`,
-      });
+    res.status(500).json({
+      success: false,
+      message: `There was an error sending your message. ${err}`,
+    });
   }
 };
 
