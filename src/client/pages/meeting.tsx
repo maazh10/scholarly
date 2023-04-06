@@ -54,7 +54,7 @@ export default function Meeting({ appointment, user, peer, session }) {
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const call = (remotePeerId) => {
