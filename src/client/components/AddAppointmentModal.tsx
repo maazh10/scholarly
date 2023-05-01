@@ -34,8 +34,8 @@ export default function AddAppointmentModal({ isOpen, onClose, onApptAdded }) {
     }
     const now = moment();
     if (start.isBefore(now)) {
-        toast.error("Start time cannot be in the past");
-        return;
+      toast.error("Start time cannot be in the past");
+      return;
     }
     if (start.isAfter(end)) {
       toast.error("Start date must be before end date");
