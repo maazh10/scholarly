@@ -8,6 +8,7 @@ import apiService from "@/services/apiService";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "../styles/components/add-appt.module.scss";
+import moment from "moment";
 
 export default function AddAppointmentModal({ isOpen, onClose, onApptAdded }) {
   const [subject, setSubject] = useState("");
@@ -29,6 +30,11 @@ export default function AddAppointmentModal({ isOpen, onClose, onApptAdded }) {
     }
     if (!selectedTutor) {
       toast.error("Please select a tutor");
+      return;
+    }
+    const now = moment();
+    if (start.isBefore(now)) {
+      toast.error("Start time cannot be in the past");
       return;
     }
     if (start.isAfter(end)) {

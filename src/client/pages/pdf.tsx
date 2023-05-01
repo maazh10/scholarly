@@ -46,10 +46,10 @@ export default function Pdf() {
         <br></br>
         <input
           type="file"
-          className={styles.form__control}
+          className={styles.formControl}
           onChange={handleFile}
         ></input>
-        {pdfError && <span className={styles.text__danger}>{pdfError}</span>}
+        {pdfError && <span className={styles.danger}>{pdfError}</span>}
       </form>
       <h5>View PDF</h5>
       <div className={styles.pdfContainer}>

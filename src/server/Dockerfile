@@ -13,4 +13,5 @@ COPY ../../.env ./
 
 EXPOSE 3001
 
-CMD [ "npm", "run", "start:server" ]
+ENV NODE_ENV production
+CMD [ "npm", "run", "dev:server" ]
