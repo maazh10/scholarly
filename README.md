@@ -4,7 +4,7 @@
 
 ### Team: Docker Demons
 
-# Depoloyable URL
+# Deployable URL
 
 You can find our project here: https://scholarly-c09.tech/
 
